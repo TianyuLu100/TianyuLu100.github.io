@@ -5,15 +5,21 @@
   const id = new URLSearchParams(window.location.search).get("id");
   const entry = ENTRIES.find((e) => e.id === id);
 
+  document.title = SITE.name;
+  document.querySelector(".brand").textContent = SITE.name;
   document.getElementById("navResume").href = SITE.resume;
   document.getElementById("year").textContent = new Date().getFullYear();
+  const footerName = document.getElementById("footerName");
+  if (footerName) footerName.textContent = SITE.name;
 
   const footerLinks = document.getElementById("footerLinks");
-  [
-    { text: "Email", href: "mailto:" + SITE.email },
-    { text: "GitHub", href: SITE.github },
-    { text: "Resume", href: SITE.resume }
-  ].forEach((l) => {
+  const footerItems = [];
+  if (SITE.email) {
+    footerItems.push({ text: "Email", href: "mailto:" + SITE.email });
+  }
+  if (SITE.github) footerItems.push({ text: "GitHub", href: SITE.github });
+  if (SITE.resume) footerItems.push({ text: "Resume", href: SITE.resume });
+  footerItems.forEach((l) => {
     const a = el("a", null, l.text);
     a.href = l.href;
     if (!l.href.startsWith("mailto:")) {
@@ -34,7 +40,7 @@
     return;
   }
 
-  document.title = entry.title + " — Thomas Zhang";
+  document.title = entry.title + " — " + SITE.name;
 
   /* ------------------------------- head ------------------------------ */
 

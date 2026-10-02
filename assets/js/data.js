@@ -24,229 +24,331 @@
    ------------------------------------------------------------------ */
 
 const SITE = {
-  name: "Andy Lu",
+  name: "Tianyu Lu",
+  eyebrow: "TAMS · University of North Texas · Class of 2027",
   tagline:
-    "Electrical & computer engineering undergrad at TAMS, working on hardware design, computer architecture, and the software around them.",
-  location: "TAMS, TX",
-  email: "al2230@unt.edu",
-  github: "https://github.com/AndyLu100",
-  resume: "al_resume_1.pdf",
+    "TAMS student at the University of North Texas, working on multi-robot task dispatching, autonomous-driving perception, racing-drone hardware, and aerodynamic simulation.",
+  description:
+    "Tianyu Lu — student at the Texas Academy of Mathematics and Science, University of North Texas. Research in multi-robot dispatching and autonomous-driving perception, plus drone hardware and aerodynamics.",
+  location: "Denton, TX",
+  school: "TAMS, University of North Texas",
+  gpa: "3.889 / 4.00",
+  email: "",
+  github: "",
+  resume: "docs/al_resume_1.pdf",
   about: [
-    "I'm a B.S.E. candidate in Electrical and Computer Engineering at TAMS (Class of 2027), where I hold a 3.96 GPA and received the Shapiro Prize for Academic Excellence in 2025.",
-    "I'm super interested in hardware engineering, embedded systems, microprocessor design!"
+    "I'm a student at the Texas Academy of Mathematics and Science at the University of North Texas in Denton (August 2025–May 2027, expected). TAMS is a residential early-college program; I take university coursework in grades 11–12. My current GPA is 3.889/4.00.",
+    "I finished grades 9–10 at Jasper High School in Plano, Texas (August 2023–May 2025) before coming to TAMS.",
+    "Most of my time goes to autonomous systems, drone hardware, and simulation — dispatching ground robots from aerial sensing, multi-camera perception, and studying how a design change shows up in the flow."
   ],
   skills: [
     {
-      heading: "Digital Design",
+      heading: "Autonomous systems and machine learning",
       items:
-        "Verilog, SystemVerilog, RTL design, Verilog testbenches, waveform debugging, CPU/GPU microarchitecture, PCI-Express, RISC-V, SoC interconnect"
+        "PPO-based task dispatching, Open-RMF, MMDetection, Transformer and occupancy-model workflows"
     },
     {
-      heading: "Software / Embedded",
+      heading: "Drone hardware and control",
       items:
-        "C/C++, Arduino, FreeRTOS, ESP32, KiCad, Python, Java, JavaScript/React.js, PostgreSQL, Git, Docker, PCB layout, schematic capture, oscilloscope & multimeter debugging"
+        "Hardware integration and flight tuning, 3D printing, pre-flight risk checks"
+    },
+    {
+      heading: "Mechanical modeling and simulation",
+      items: "ANSYS Fluent modeling and meshing, aerodynamic simulation"
+    },
+    {
+      heading: "Communication",
+      items:
+        "Research writing; technical podcast scripting, recording, and production"
+    },
+    {
+      heading: "Languages",
+      items: "Python, Java, C++"
     }
+  ],
+  honors: [
+    "UNT Undergraduate Research Fellowship (grades 11–12)",
+    "USA Mathematical Olympiad (USAMO) qualifier; AIME best score 12/15 (grade 11)",
+    "AMC 10 Distinguished Honor Roll, top 1%; AMC 12 Distinction, top 5% (grades 10–11)",
+    "USA Physics Olympiad (USAPhO) qualifier via the F=ma exam (grade 10)",
+    "Physics Bowl, 2nd-place team in Texas, Region 11, Division 1 (grade 10)",
+    "Plano ISD Superintendent's Scholar Award, district-wide (grade 10)",
+    "Best Science Education Award, UTD STEM Bridge Summer Research Camp (grade 10)"
+  ],
+  athletics: [
+    "Point guard, TAMS basketball (2023–present). Played in the UNT Open Basketball Tournament, and keep a near-daily strength and running routine from middle school.",
+    "TAMS table tennis (2023–present). Weekly singles and doubles, with forehand and backhand footwork drills.",
+    "Competitive bridge (2014–2023). Tournament play from grade 1 through grade 9: bidding systems, partnership communication under incomplete information, and structured post-game review."
   ]
 };
 
 const ENTRIES = [
   /* ----------------------------- EXPERIENCE ----------------------------- */
   {
-    id: "parallel-group",
+    id: "yang-lab",
     kind: "experience",
-    title: "Developed an attention-enhanced proximal policy optimization model to dispatch unmanned ground vehicles using aerial sensing information from a UAV",
-    role: "Researcher",
-    org: "UNT lab",
-    date: "May 2026 — Present",
+    title: "UAV-Assisted UGV Task Dispatching",
+    role: "Student Researcher",
+    org: "University of North Texas, Prof. Qing Yang's Lab",
+    date: "Aug. 2025 — Present",
     image: "images/ppo_vs_attn_ppo_robot3_no_wait_dashes_no_value_arrows.png",
+    imageFit: "contain",
     blurb:
-      "Built hardware-level AI safety machinery into a RISC-V GPGPU — an on-chip probe that watches L2 hidden-state traffic for LLM misalignment, plus a unit that fingerprints model weights as they land in VRAM.",
-    tags: ["Proximal Policy Optimization", "ROS", "PyTorch", "C++", "Python"],
+      "Developed an attention-enhanced proximal policy optimization model that dispatches unmanned ground vehicles from aerial sensing, first in Open-RMF logistics and then in a search-and-rescue setting.",
+    tags: ["PPO", "Open-RMF", "Reinforcement learning", "Python"],
     links: [],
     overview: [
-      "I worked in the UNT lab to develop a proximal policy optimization model to dispatch unmanned ground vehicles using aerial sensing information from a UAV."
-    ],
-    details: [
-      {
-        heading: "Achievements:",
-        points: [
-          "I defined a threat model for non-bypassable activation monitoring and compared three placements of the trusted computing base (TCB).",
-          "I implemented a SystemVerilog prototype of our safety monitor on top of the Vortex open source GPGPU, complete with an sparse autoencoder (SAE) checker accelerator and an ingress hashing mechanism for fingerprinting LLM runtimes.",
-          "I demonstrated that our monitor had negligible performance interference with the resident workload using end-to-end RTL simulations.",
-          "I thoroughly red-teamed our safety monitor against attacks, assessing various alternative solutions and identifying tradeoffs in flexibility and security.",
-        ]
-      },
-      {
-        heading: "RTL prototype:",
-        points: [
-          "The core of the sparse autoencoder accelerator consists of a output-stationary systolic array. The array reads activations from the memory hierarchy through the L2 cache port arbiter, streaming the values from a double-buffered input buffer. Sparse autoencoder logits are compared against pre-computed thresholds to produce misalignment flags.",
-          "Kernel execution is gated on hardware symmetric signature verification of a model manifest, which contains hashes of model weights and kernel code for fingerprinting, as well as metadata to tell the alignment monitor what to do.",
-          "To test the interference of the alignment monitor on resident workloads, I wrote realistic tiled GEMM kernels in C++ for the Vortex runtime and ran them alongside our alignment monitor, measuring cycle counts and checker latency.",
-          "I also built a Python-driven automated regression suite for verification of the correctness of all features added in the RTL prototype."
-        ]
-      },
-      {
-        heading: "Weight identification unit",
-        points: [
-          "Independent of the Vortex prototpye, I also built a SystemVerilog proof of concept for an optimized ingress hashing mechanism which snoops memory-mapped AXI interconnect bursts and computes a sequential SHA-256 hash on the fly, saving the memory bandwidth that would be spent on an extra readout of model weights."
-        ]
-      }
-    ],
-    documents: [
-      {
-        kicker: "Report",
-        title:
-          "Measured Models: A Hardware Perspective on Non-Bypassable AI Alignment",
-        authors: "Andy Lu, Yihao Zhu, Qing Yang",
-        venue: "Department of Electrical and Computer Engineering, TAMS",
-        summary:
-          "Developed an attention-enhanced proximal policy optimization model to dispatch unmanned ground vehicles using aerial sensing information from a UAV.",
-        href: "docs/Attn_PPO_Paper_Draft (1).pdf",
-        cover: "images/ppo_vs_attn_ppo_robot3_no_wait_dashes_no_value_arrows.png",
-        pages: 11
-      }
-    ],
-    gallery: []
-  },
-  {
-    id: "fu-lab",
-    kind: "experience",
-    title: "Microfabrication for Optoelectronic Biosensing",
-    role: "Research Assistant",
-    org: "Fu Lab, TAMS",
-    date: "August 2025 — December 2025",
-    image: "images/fu-lab.jpg",
-    blurb:
-      "Ran cleanroom microfabrication to build a prototype centimeter-scale optoelectronic biosensing chip for pharmacology and neuroscience applications.",
-    tags: ["KLayout", "Photolithography", "Thin films", "Cleanroom"],
-    links: [],
-    overview: [
-      "I performed hands-on device fabrication in the Fu Lab, taking an optoelectronic biosensor from mask layout through a full process flow to an initial prototype."
+      "I work in Prof. Qing Yang's lab at the University of North Texas, about 15 hours a week through the school year, on learned dispatching for unmanned ground vehicles.",
+      "The dispatcher uses aerial sensing from a UAV. I studied task allocation first in an Open-RMF logistics environment, then adapted the same coordination problem to search and rescue, where a UAV locates targets and ground vehicles respond."
     ],
     details: [
       {
         heading: "What I did",
         points: [
-          "Conducted microfabrication procedures — KLayout mask design, photolithography, spin-coating, and metal deposition.",
-          "Fabricated a prototype centimeter-scale optoelectronic biosensing chip intended for pharmacology and neuroscience applications."
+          "Developed an attention-enhanced proximal policy optimization model to dispatch unmanned ground vehicles using aerial sensing from a UAV.",
+          "Implemented and evaluated scheduling simulations, analyzed the results, and revised the project when feasibility or the model itself got in the way.",
+          "Prepared a first-author manuscript, submitted on August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things. It is still under review.",
+          "In that manuscript, attention-enhanced PPO records the lowest total completion time and queue variance among the dispatchers compared on the reported test configuration."
         ]
       }
     ],
-    /* Stacked, full-width figures with room to write between them.
-       Each item: { src, alt, caption, text: ["paragraph", ...] } */
-    figuresHeading: "In the lab",
+    documents: [
+      {
+        kicker: "Manuscript",
+        title:
+          "Attention-Enhanced PPO for UGV Task Dispatching in UAV-Assisted Open-RMF Logistics",
+        authors: "Tianyu Lu (first author)",
+        venue:
+          "Submitted August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things. Under review.",
+        summary:
+          "Compares PPO-based UGV dispatching, including an attention-enhanced encoder, with A2C, DQN, greedy, and round-robin scheduling in an Open-RMF simulation.",
+        href: "docs/Attn_PPO_Paper_Draft (1).pdf"
+      }
+    ],
+    figuresHeading: "The dispatcher",
     figures: [
       {
-        src: "images/fu-1.png",
-        alt: "Gowned up in the cleanroom",
-        caption: "Gowned up for a run in the cleanroom.",
-        text: [
-          "Almost all of the fabrication happened in the Princeton Micro/Nanofabrication Center (MNFC) cleanroom. I followed a strict gowning protocol before entering to keep particles off the wafer."
-        ]
-      },
-      {
-        src: "images/fu-2.png",
-        alt:
-          "Device concept: cells on a 2D material over a substrate, excited by a laser from below",
+        src: "images/ppo_vs_attn_ppo_robot3_no_wait_dashes_no_value_arrows.png",
+        wide: true,
+        alt: "Diagram comparing an MLP PPO policy with an attention-enhanced PPO that tokenizes robots and tasks",
         caption:
-          "Device concept — cells sit on a 2D material, a laser excites from below, and the emitted light is read out.",
+          "Same PPO update loop; Attn-PPO swaps the flat observation vector for masked attention over robot and task tokens.",
         text: [
-          "We can obtain optical measurements of cellular voltages by placing cell cultures directly on top of the 2D material, exciting the material with a laser, and using a high-speed camera or photodetector to capture light emitted from the semiconductor.  The 2D semiconductor is a transition-metal dichalcogenide (WS2), which has a crystalline structure that becomes ‘direct-gap’ as we thin it to a single layer. In a ‘direct-gap material,’ the minimum energy level in the conduction band and the maximum energy level in the valence band occur at the same crystal momentum (k-value), allowing for electrons to transition between bands easily by absorbing or emitting photons. As such, these materials are very efficient light-emitters and can effectively be used as fluorescent probes in our voltage sensing device. Moreover, due to the atomically-thin geometry of these materials, they are extremely sensitive to surface electric fields: even those as weak as those produced by neurons." 
-        ]
-      },
-      {
-        src: "images/fu-3.png",
-        alt: "Microscope image of photoresist after liftoff",
-        caption: "Microscope image of photoresist after liftoff.",
-        text: [
-          "WS2 exhibits the best photoluminescent responsivity when a 600mV DC voltage bias is applied (this is the region in which the rate of change of the PL intensity with respect to the applied voltage is the highest). Thus, to achieve this, we must apply a uniform initial electrical potential to the entire monolayer. The method that we have proposed is to deposit a grid of thin metal traces directly on top of the 2D semiconductor, which, when connected to an external voltage source, will create a uniform electrostatic distribution across the entire monolayer, providing the initial carrier density required for high responsivity."
-        ]
-      },
-      {
-        src: "images/fu-4.png",
-        alt:
-          "Cross-section of a bilayer resist stack with AZ1505 over LOR3A and deposited metal",
-        caption:
-          "Bilayer resist stack — AZ1505 over LOR3A — set up for metal liftoff.",
-        text: [
-          "The images on this page depict the process of microfabrication for our device prototype. I designed the photomask in KLayout, and uploaded the resulting GDSII files to the Heidelberg DWL66+, where the photomask was exposed. The exposed photoresist was then removed and a Chrome Etcher was used to remove the chrome layer in areas where the photoresist was originally exposed. I then spincoated a bilayer configuration of photoresist onto our wafer, exposed the wafer using our fabricated photomask, and removed the exposed photoresist using developer solution. After obtaining a wafer with successful patterning of resist, the Angstrom NexDep E-Beam evaporator was used to deposit several layers of metal (gold and titanium) on the wafer. Upon the completion of the deposition, the wafer was placed into a heated dish of 1165 microposit remover for several hours for metal liftoff. During this process, the underlying photoresist is dissolved away, carrying away any metal deposited on top of it and leaving only the metal in the original pattern that I designed." 
+          "The policy still chooses among three ground robots or waiting. The attention encoder is there so the dispatcher can reason about which robot and which task belong together, instead of mixing a single 63-dimensional vector through an MLP."
         ]
       }
     ],
     gallery: []
   },
   {
-    id: "hmei-air-pollution",
+    id: "autonomous-perception",
     kind: "experience",
-    title: "India Air Pollution Data Platform",
-    role: "Full-Stack Software Developer & Data Scientist",
-    org: "High Meadows Environmental Institute",
-    date: "June 2025 — August 2025",
-    image: "images/hmei.jpg",
+    title: "Multi-Camera Occupancy Perception",
+    role: "Research Assistant",
+    org: "UNT Autonomous-Driving Perception Project",
+    date: "Aug. 2025 — Present",
+    image: "",
     blurb:
-      "A React + FastAPI + PostgreSQL web app visualizing city-level air pollution across India, built to quantify how effective government policy has been over time.",
-    tags: ["React", "FastAPI", "PostgreSQL", "Docker", "Jenkins", "Web Scraping", "Machine Learning"],
-    links: [
-      {
-        label: "indiaairpollution.mauzerall.scholar.princeton.edu",
-        href: "https://indiaairpollution.mauzerall.scholar.princeton.edu"
-      }
-    ],
+      "Built on MMDetection to train Transformer and occupancy models that place nearby vehicles relative to the ego vehicle, and compared six-camera training with a single view.",
+    tags: ["MMDetection", "Transformers", "Occupancy", "Multi-camera"],
+    links: [],
     overview: [
-      "A public research tool for the Mauzerall group at Princeton's High Meadows Environmental Institute. The platform brings city-level Indian air quality data into one place so researchers can measure the efficacy of government policies over time."
+      "About five hours a week through the school year, on a perception stack that reads the scene around a vehicle from cameras."
     ],
     details: [
       {
-        heading: "Platform",
+        heading: "What I did",
         points: [
-          "Built a React + FastAPI + PostgreSQL web app visualizing city-level air pollution data in India.",
-          "Dockerized the application and deployed it through a Jenkins pipeline."
-        ]
-      },
-      {
-        heading: "Data science",
-        points: [
-          "Built Selenium web scrapers the gather data in bulk from India's CPCB Website.",
-          "Reduced missing-data bias by parallelizing Monte Carlo simulations on Princeton's Della cluster.",
-          "Isolated emissions trends from historical weather patterns using machine learning (random forest)."
+          "Used MMDetection as the base of a training pipeline that combines Transformer networks with occupancy modeling on multi-camera images.",
+          "Worked on locating nearby vehicles relative to the ego vehicle, and compared how stable and how expensive six-view training is against a single view.",
+          "Outlined a next step from perception into motion planning and trajectory prediction."
         ]
       }
     ],
+    gallery: []
+  },
+  {
+    id: "stem-bridge",
+    kind: "experience",
+    title: "Wind-Turbine Condition Monitoring",
+    role: "Team Researcher",
+    org: "UT Dallas STEM Bridge, advised by Dr. Jie Zhang",
+    date: "Summer 2025",
+    image: "images/utdwind.png",
+    imageFit: "contain",
+    blurb:
+      "With a team at UT Dallas, prototyped a low-cost, data-driven monitor that looks for generator faults in high-resolution electrical signals from wind turbines.",
+    tags: ["Machine learning", "Condition monitoring", "Wind turbines"],
+    links: [],
+    overview: [
+      "Six-week summer research camp, about 15 hours a week, on machine-learning methods for wind-turbine condition monitoring. The team received the program's Best Science Education Award."
+    ],
+    details: [
+      {
+        heading: "What I did",
+        points: [
+          "Worked under Dr. Jie Zhang on models that read high-resolution electrical signals from the generator.",
+          "Helped prototype a low-cost monitor aimed at generator faults, unplanned downtime, and maintenance decisions. Maintenance is about 38% of operating cost, and the generator accounts for about 17% of turbine failures.",
+          "Tied model performance back to those operating constraints and presented the project with the team."
+        ]
+      }
+    ],
+    documents: [
+      {
+        kicker: "Poster",
+        title:
+          "Machine Learning-Enabled Condition Monitoring of Wind Turbines Using High-Resolution Electrical Signals",
+        authors:
+          "Amanda Yin, Christopher Huang, Emily Yin, Irene Liu, Tianyu Lu. Advisor: Jie Zhang.",
+        venue: "UT Dallas STEM Bridge Summer Research Camp, 2025",
+        summary:
+          "A data-driven condition-monitoring approach for wind-turbine generators, presented by the team that received the camp's Best Science Education Award.",
+        href: "docs/2025 UTD STEM Bridge Final Poster_Group 11.pdf"
+      }
+    ],
+    figuresHeading: "The signal path",
     figures: [
       {
-        video: "media/scraper.mp4",
-        poster: "images/scraper-poster.jpg",
+        src: "images/utdwind.png",
         wide: true,
-        alt:
-          "Automated browser stepping through the CPCB air quality portal, selecting state, city, station, and date range before submitting",
+        alt: "Diagram from a wind turbine and generator windings into an LSTM condition-monitoring model",
         caption:
-          "The scraper working through the CPCB portal, station by station.",
+          "Generator electrical signals as the input to a learned condition monitor.",
         text: [
-          "India's Central Pollution Control Board publishes station-level readings only through a form on its Central Control Room portal: one state, city, station, parameter set, and date range at a time, with no bulk export and no API.",
-          "I built new custom web scraper scripts and improved upon old ones to collect hourly pollution data across hundreds of cities over the past decade. These scrapers also collected annual mitigation spending metrics and hundreds of city-specific action plan pdfs from the website."
+          "The camp project treats the generator's electrical waveform as the measurement, and asks a model to flag faults early enough to matter for maintenance."
         ]
-      },
+      }
+    ],
+    gallery: []
+  },
+  {
+    id: "ximalaya",
+    kind: "experience",
+    title: "Engineering Podcasts on Ximalaya",
+    role: "Founder, Host, and Producer",
+    org: "Ximalaya audio channel",
+    date: "2018 — Present",
+    image: "",
+    blurb:
+      "A long-running Chinese-language channel: 23 new episodes since late 2025, split between engineering-accident reconstructions and notes on learning autonomous driving. About 16.8k plays.",
+    tags: ["Podcasting", "Technical writing", "Autonomous driving"],
+    links: [],
+    overview: [
+      "About two hours a week. I started posting recitations and English dubbing in 2018, which is where the recording habit comes from, and relaunched the channel in late 2025."
+    ],
+    details: [
       {
-        src: "images/hmei-3.png",
-        alt:
-          "Box plots of bias against threshold in days, with data-loss curves for three station-hour cutoffs",
-        caption:
-          "Choosing a completeness threshold for daily-to-monthly aggregation: bias falls as the threshold rises, but so does the amount of surviving data.",
-        text: [
-          "Station data arrives full of gaps, and we want to produce daily, monthly, and annual pollution metric averages that are robust against missing-data biases. We conducted large-scale randomized Monte Carlo style simulations on the Della computing cluster to figure out how strict our quality control thresholding should be. For example, requiring too few valid days per month would result in the averages being biased, while requiring too many would remove most cities from our dataset.",
-          "I ran many sweeps in parallel on the Della cluster using SLURM scripts, enabling me to grid-search an array of policies."
+        heading: "The shows",
+        points: [
+          "23 original episodes so far: 15 of Engineering Insights and 8 of Self-Driving Beginner's Journal.",
+          "For Engineering Insights I read documented engineering accidents, reconstruct the technical decisions behind them, and turn the failure into a script for a general audience.",
+          "Self-Driving Beginner's Journal is a set of learning notes on autonomous driving, including places I had to correct an earlier misunderstanding.",
+          "Together the programs have about 16.8k plays."
         ]
-      },
+      }
+    ],
+    gallery: []
+  },
+  {
+    id: "physics-club",
+    kind: "experience",
+    title: "Jasper High School Physics Club",
+    role: "Founder and President",
+    org: "Jasper High School, Plano",
+    date: "2024 — 2025",
+    image: "",
+    blurb:
+      "Founded the school's first physics club, grew it past 60 members, and coached a Physics Bowl team that finished second in Texas.",
+    tags: ["Physics Bowl", "Teaching", "Club leadership"],
+    links: [],
+    overview: [
+      "Grade 10 at Jasper, about two hours a week across the school year. I handed the club to a successor when I left for TAMS."
+    ],
+    details: [
       {
-        src: "images/hmei-2.png",
-        wide: true,
-        alt:
-          "Diagram of a random forest deweathering model taking time variables and sampled meteorological conditions to output deweathered PM2.5",
-        caption:
-          "Deweathering: a random forest separates the emissions signal from year-to-year variation in the weather.",
-        text: [
-          "A drop in PM2.5 on the time series graph for a certain site doesn't necessarily imply a decrease in human-caused pollution. For instance, a windier or humid period may automatically decrease measured pollutant concentrations. To attribute changes to emissions, the weather has to be removed the signal first.",
-          "I decided to use a Random Forest model to try to remove the effect of weather from our pollution time series. The model is trained to predict PM2.5 concentrations from time variables, which stand in for emissions, plus meteorology from ERA5. We then predicted each datapoint a thousand times over randomly resampled weather conditions and averaged the results, producing a 'deweathered' time series where a trend can reasonably be read as a change in what's being emitted."
+        heading: "What I did",
+        points: [
+          "Founded the school's first physics club and recruited more than 60 members.",
+          "Planned recurring workshops on college-level physics, with explanations, demonstrations, and practice problems.",
+          "Formed and coached a Physics Bowl team that earned second place in Texas, Region 11, Division 1."
+        ]
+      }
+    ],
+    gallery: []
+  },
+  {
+    id: "mu-alpha-theta",
+    kind: "experience",
+    title: "Physics Competition Preparation",
+    role: "Physics Competition Committee Head",
+    org: "Mu Alpha Theta, TAMS",
+    date: "2026 — Present",
+    image: "",
+    blurb:
+      "Lead weekly mechanics sessions for students preparing for physics contests, working through past F=ma problems and a problem bank built from old exams.",
+    tags: ["F=ma", "Mechanics", "Teaching"],
+    links: [],
+    overview: [
+      "About two hours a week during the school year, running the physics side of contest prep at TAMS."
+    ],
+    details: [
+      {
+        heading: "What I did",
+        points: [
+          "Lead weekly mechanics sessions and work through past F=ma problems with students preparing for physics competitions.",
+          "Assembled a reusable problem bank from prior exams so practice and discussion have a shared set of questions."
+        ]
+      }
+    ],
+    gallery: []
+  },
+  {
+    id: "math-tutor",
+    kind: "experience",
+    title: "Elementary Mathematics Tutoring",
+    role: "Volunteer Mathematics Tutor",
+    org: "Stephens Elementary School",
+    date: "Aug. 2025 — Present",
+    image: "",
+    blurb:
+      "Tutor about 20 fourth- and fifth-graders in small groups, and organized MathFun, a game session built around mathematical reasoning.",
+    tags: ["Tutoring", "Mathematics"],
+    links: [],
+    overview: [
+      "About an hour and a half a week for roughly ten weeks of the year, with fourth- and fifth-grade students at Stephens Elementary."
+    ],
+    details: [
+      {
+        heading: "What I did",
+        points: [
+          "Tutor 20 students through weekly small-group instruction and problem-solving practice.",
+          "Organized MathFun, a game-based session meant to pull students into mathematical reasoning through accessible challenges."
+        ]
+      }
+    ],
+    gallery: []
+  },
+  {
+    id: "ayls",
+    kind: "experience",
+    title: "Youth Service and Fundraising",
+    role: "Fundraising and Service Volunteer",
+    org: "Alliance of Youth Leaders in the United States",
+    date: "2023 — 2025",
+    image: "",
+    blurb:
+      "Ran concession stands, raised about $300 for programs serving children with disabilities, packed donated books, and prepared meals with Feed My Starving Children.",
+    tags: ["Fundraising", "Service"],
+    links: [],
+    overview: [
+      "Grades 9–10, about an hour a week across the school year, with the Alliance of Youth Leaders in the United States."
+    ],
+    details: [
+      {
+        heading: "What I did",
+        points: [
+          "Operated concession stands at community parks and personally raised approximately $300 for programs serving children with disabilities.",
+          "Packed donated books for communities in Africa and prepared meal packages through Feed My Starving Children."
         ]
       }
     ],
@@ -255,189 +357,81 @@ const ENTRIES = [
 
   /* ------------------------------ PROJECTS ------------------------------ */
   {
-    id: "f10-car",
+    id: "ekdrone",
     kind: "project",
-    title: "F10 Car — Autonomous Racing Car",
-    role: "Team Lead",
-    org: "UNT F10 Racing Team",
-    date: "September 2024 — Present",
-    image: "images/f10.png",
+    title: "EkDrone Racing UAV",
+    role: "Hardware and Flight Lead",
+    org: "EkDrone Racing UAV Project",
+    date: "Grades 11–12",
+    image: "",
     blurb:
-      "A differential-drive robot that plays the game of PacMan in a physical maze. Implemented a noise-resistant power topology, motor drive system, gyroscope, and IR analog front-end on a custom 4-layer PCB.",
-    tags: ["KiCad", "ESP32", "FreeRTOS", "PID control systems", "Analog design"],
+      "With three teammates, integrated a racing drone, tuned the power-to-weight balance and radio setup, and flew the prototype after a pre-flight checklist.",
+    tags: ["UAV", "Flight tuning", "3D printing", "Fluid dynamics"],
     links: [],
     overview: [
-      "Pacbot is a national competition in which teams build a robot that plays a physical game of Pac-Man in real time. I lead the hardware side of the team, from schematic capture to closed-loop software control on the finished board.",
-      "The team placed 2nd in the 2025 National Pacbot Competition."
+      "A ten-week build, about 25 hours a week. I was responsible for getting the hardware to agree with itself and for the flying."
     ],
     details: [
       {
-        heading: "Hardware",
+        heading: "Hardware and flight",
         points: [
-          "Designed the power topology, motor-drive circuitry, IR transceiver analog front-end, and KiCad PCB layout for a differential-drive maze robot.",
-          "The differential-drive design achieved roughly 4x the PID update frequency and 2x the robot velocity of the previous omniwheel design.",
-          "Debugged PCB hardware with oscilloscopes and multimeters; diagnosed and resolved signal integrity and analog circuit issues across multiple board revisions."
-        ]
-      },
-      {
-        heading: "Firmware",
-        points: [
-          "Implemented low-level drivers for TCP/IP communication, encoders, and IMU odometry in ESP-IDF (ESP32/FreeRTOS).",
-          "Implemented PID motor control, integrating IR sensor, encoder, and gyro feedback for real-time closed-loop navigation."
-        ]
-      }
-    ],
-    figuresHeading: "The robot",
-    figures: [
-      {
-        src: "images/pacbot-1.jpg",
-        alt:
-          "The assembled Pacbot: a round purple PCB with wheels, IR emitter and receiver pairs around the rim, and a LiPo battery strapped on top",
-        caption:
-          "The assembled robot. The current iteration is a two-wheel differential drive car, small enough to fit in the palm of your hand.",
-        text: [
-          "The entire robot is integrated onto a single four-layer PCB. Its energy-efficient power architecture uses several DC-DC switching regulators and an LDO regulator to supply the required voltages to each component. The PCB incorporates separate analog and switching ground planes, which are meant to minimize electromagnetic interference and maintain low-impedance return paths.",
-          "The robot dynamically detects wall proximity, turns, and intersections using IR emitter and receiver pairs around the rim, integrating the measurements into the PID control loop to maintain course. The wheel encoder measurements are combined with feedforward speed control to follow a software speed profiler."
-        ]
-      },
-      {
-        src: "images/pacbot-2.jpg",
-        alt:
-          "A plywood practice maze with the differential-drive robot at one end and two older octagonal omniwheel robots at the other",
-        caption:
-          "The practice maze, with this year's differential-drive robot at the top and the previous omniwheel generations parked at the bottom.",
-        text: [
-          "We built a small plywood maze (representing a quadrant of the PacMan maze) to test in. The tape marks are reference points that we used for basic PID tuning.",
-          "The two octagonal robots at the bottom are the previous omniwheel design. Moving to differential drive cost the ability to strafe, and required more sophisticated odometry, but brought the advantages of a higher robot top speed."
+          "Built the racing drone with three teammates. I took the lead on integrating hardware, checking that components were compatible, and tuning the receiver and remote-control parameters.",
+          "Adjusted the power-to-weight balance and flight parameters for high-speed flying, using racing-drone materials and 3D-printed parts informed by a fluid-dynamics simulation.",
+          "Wrote and ran a pre-flight risk checklist, managed flight operations, and conducted the maiden flight after the team had verified the system."
         ]
       }
     ],
     gallery: []
   },
   {
-    id: "ooo-processor",
+    id: "wing-washout",
     kind: "project",
-    title: "Out-of-Order and Superscalar RISC-V Processors",
-    role: "Academic Project",
-    org: "TAMS",
-    date: "February 2026 — April 2026",
-    image: "images/ooo-processor.jpg",
-    imageFit: "contain",
+    title: "Wing Washout Aerodynamics Study",
+    role: "Organizer",
+    org: "School science project",
+    date: "2024 — 2025",
+    image: "",
     blurb:
-      "Implemented multiple fully bypassed, pipelined RISC-V cores in Verilog. Implemented a dual-issue (two-lane) superscalar. Implemented modern processor features such a scoreboard, reorder buffer (for out-of-order execution), and pipelined multiply/divide unit.",
-    tags: ["Verilog", "RISC-V", "Microarchitecture", "Verification", "Waveform Debugging"],
+      "Used ANSYS Fluent to study how wing washout can delay tip stall on a simplified commercial-aircraft wing, and where that twist costs efficiency.",
+    tags: ["ANSYS Fluent", "SST k-omega", "Aerodynamics"],
     links: [],
     overview: [
-      "Implemented multiple fully bypassed, pipelined RISC-V cores in Verilog. Implemented a dual-issue (two-lane) superscalar. Implemented modern processor features such a scoreboard, reorder buffer (for out-of-order execution), and pipelined multiply/divide unit."
+      "Grade 10, about 10 hours a week for eight weeks. I presented the project at the school science fair."
     ],
     details: [
       {
-        heading: "Microarchitecture",
+        heading: "The study",
         points: [
-          "Designed and implemented a fully bypassed, pipelined dual-issue RISC-V processor in Verilog, including datapath, control logic, and a pipelined multiplication/division unit.",
-          "Implemented a scoreboard and reorder buffer to support out-of-order execution and dependency tracking.",
-          "Implemented control logic for exclusive and inclusive cache hierarchies."
-        ]
-      },
-      {
-        heading: "Verification",
-        points: [
-          "Developed Verilog testbenches and assembly-level verification programs to validate processor correctness."
-        ]
-      }
-    ],
-    figuresHeading: "Inside the core",
-    figures: [
-      {
-        src: "images/ooo-1.png",
-        wide: true,
-        alt:
-          "GTKWave window showing processor and cache signals during a vvadd benchmark trace",
-        caption:
-          "Debugging our RTL in GTKWave.",
-        text: [
-          "Much of the time that was spent building these processors was spent reading waveforms. When a benchmark or regression test returned a wrong value, we had to pull up GTKWave to view the vcd waveform for the run. My strategy was usually walking backwards from a problematic signal to trace the origin of a deadlock or indeterminate value.",
-          "Testbenches and hand-written assembly programs also helped to verify the correctness of each unit in isolation."
-        ]
-      },
-      {
-        src: "images/ooo-2.png",
-        alt:
-          "Hand-drawn scoreboard table with a row per destination register and columns for active, pipe, is_load, is_muldiv, and per-stage data availability",
-        caption:
-          "Scoreboard hardware structure: one row per architectural register, tracking where its value is and when it will be ready.",
-        text: [
-          "Modern processors implement instruction dependency tracking using a hardware data structure called a Scoreboard, helping instructions in the Decode/Issue stage to know when they can be issued and where they can bypass values from.",
-          "In order to issue instructions while respecting read-after-write register dependencies and structural hazards, we must know, for every register, whether there is a pending instruction writing to it and where it it is along the pipe (for bypassing). Each row here marks whether the register has a pending write, which pipe (A or B) will produce it, whether that producer is a load or a long-latency multiply/divide, and the current pipeline stage that the instruction is in.",
-          "Our scoreboard was integrated with our dual-issue superscalar processor. Our superscalar was capable of issuing two instructions at once, which required us to implement sophisticated instruction steering control in the Decode stage. Furthermore, with two lanes, we had to consider difficult edge cases such as when a branch is resolved in an execution stage, requiring us to squash the adjacent instruction and roll back scoreboard state."
-        ]
-      },
-      {
-        src: "images/ooo-3.png",
-        wide: true,
-        alt:
-          "Block diagram of the memory hierarchy: core, split L1 instruction and data caches, a round-robin 2-to-1 arbiter, unified L2 and L3, and a memory adapter",
-        caption:
-          "Basic block diagram of the memory hierarchies that I implemented for my final project.",
-        text: [
-          "For my final project, I implemented the control logic for both an inclusive and exclusive cache hierarchy (complete with an L1 instruction/data cache, L2 cache, and L3 cache), integrating them with one of our processors.",
-          "An exclusive hierarchy maintains the invariant that a cache line lives in at most one level of the hierarchy at any given time.",
-          "An inclusive hierarchy maintains the invariant that a cache line that lives in one cache must exist in all downstream caches (e.g. a line in L1 must also exist in L2 and L3).",
-          "I quickly realized the complexity of the control logic for these hierarchies: they require strict invariants about the cache dimensions, victim handling, and cache line invalidation. I had to design multiple small FSM controllers in order to handle the logic for all of the different situations (e.g. an downstream request may or not carry a victim, it may or may not request a line to be sent back upstream, the victim may or may not be dirty, etc..)."
-        ]
-      },
-      {
-        src: "images/ooo-4.png",
-        wide: true,
-        alt:
-          "Grouped bar chart of cycle counts for exclusive versus inclusive cache configurations across four benchmarks",
-        caption:
-          "Exclusive vs. inclusive performance across four benchmarks.",
-        text: [
-          "With both an inclusive and exclusive cache hierarchy implemented, I compared the performance of both configurations when running on different benchmark programs. Exclusive came out slightly ahead on most benchmarks, likely because it is able to hold more distinct lines for the same total capacity.",
+          "Looked at how wing washout can delay wing-tip stall, and at the efficiency tradeoff that twist introduces, on a simplified commercial-aircraft wing.",
+          "Built and meshed the model in ANSYS Fluent, compared several washout and angle-of-attack cases, and used the runs to mark a promising design range rather than a universal aircraft fix.",
+          "Cleared negative-volume mesh errors with local refinement and boundary-layer settings, and used the SST k-omega model for the vortical flow.",
+          "Documented that the numerical results still need to be checked against reference or experimental data."
         ]
       }
     ],
     gallery: []
   },
   {
-    id: "rtl-processor-fpga",
+    id: "marble-sorter",
     kind: "project",
-    title: "16-bit RTL Processor on FPGA",
-    role: "Academic Project",
-    org: "TAMS",
-    date: "December 2025",
-    image: "images/rtl-processor.jpg",
+    title: "Material Marble Sorter",
+    role: "Engineering Project Team Member",
+    org: "School engineering project",
+    date: "2024 — 2025",
+    image: "",
     blurb:
-      "A 16-bit stored-program processor with a 20-instruction ISA, written in Verilog and synthesized onto a Xilinx FPGA with Vivado.",
-    tags: ["Verilog", "FPGA", "Vivado", "ISA design"],
+      "A sorter that routes wood, glass, and metal marbles. Unreliable glass detection, caused by similar colors, was fixed by marking the exit so the sensor could see glass consistently.",
+    tags: ["Sensing", "Prototyping"],
     links: [],
     overview: [
-      "A 16-bit stored-program processor with a 20-instruction ISA, written in Verilog and synthesized onto a Xilinx FPGA with Vivado."
+      "Grade 10, about eight hours a week for four weeks, on a small sorting machine."
     ],
-
-    figuresHeading: "Design",
-    figures: [
+    details: [
       {
-        src: "images/punc-3.jpg",
-        tall: true,
-        alt:
-          "Hand-drawn datapath for PUnC: program counter, instruction register, 8x16 register file, ALU, 2^16 x 16 memory, sign extender, and N/Z/P condition registers, with every control signal labelled at the left edge",
-        caption:
-          "The datapath: every mux, register, and control signal in the processor.",
-        text: [
-          "The datapath for the machine includes a program counter, an instruction register, an 8×16 register file, an ALU, and memory, tied together by muxes that decide where each value comes from and is routed to. The N, Z, and P registers on the right latch the sign of the last instruction's result so that a subsequent branch knows whether or not to be taken.",
-        ]
-      },
-      {
-        src: "images/punc-2.jpg",
-        wide: true,
-        alt:
-          "Spreadsheet mapping every control signal to every FSM state, with a selection-bit mapping table beneath it",
-        caption:
-          "The control table: we have one column per FSM state, one row per control signal, and a 1 wherever that signal should be asserted as HIGH.",
-        text: [
-          "Control is a finite state machine that walks from INIT to Fetch to Decode and then into a state per instruction, with multi-cycle instructions like LDI and STI split across numbered states. This table represents the control signals for each state, representing exactly which signals go high.",
+        heading: "What I did",
+        points: [
+          "Built a system that distinguishes and routes wood, glass, and metal marbles from material and color.",
+          "Traced unreliable glass detection to marbles whose color was too close to the background, and added blue tape at the exit so the sensor registered glass as it passed."
         ]
       }
     ],

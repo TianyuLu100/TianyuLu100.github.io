@@ -3,15 +3,41 @@
 (function () {
   /* ------------------------------ hero ------------------------------ */
 
+  document.title = SITE.name;
+  document.querySelector(".brand").textContent = SITE.name;
   document.getElementById("heroName").textContent = SITE.name;
   document.getElementById("heroTagline").textContent = SITE.tagline;
+  if (SITE.eyebrow) {
+    document.getElementById("heroEyebrow").textContent = SITE.eyebrow;
+  }
   document.getElementById("navResume").href = SITE.resume;
+  const description = document.querySelector('meta[name="description"]');
+  if (description && SITE.description) {
+    description.setAttribute("content", SITE.description);
+  }
 
-  const contacts = [
-    { label: "Email", href: "mailto:" + SITE.email, text: SITE.email },
-    { label: "GitHub", href: SITE.github, text: "github.com/AndyLu100" },
-    { label: "Resume", href: SITE.resume, text: "Resume (PDF)" }
-  ];
+  const contacts = [];
+  if (SITE.email) {
+    contacts.push({
+      label: "Email",
+      href: "mailto:" + SITE.email,
+      text: SITE.email
+    });
+  }
+  if (SITE.github) {
+    contacts.push({
+      label: "GitHub",
+      href: SITE.github,
+      text: SITE.github.replace(/^https?:\/\//, "").replace(/\/$/, "")
+    });
+  }
+  if (SITE.resume) {
+    contacts.push({
+      label: "Resume",
+      href: SITE.resume,
+      text: "Resume (PDF)"
+    });
+  }
 
   const heroMeta = document.getElementById("heroMeta");
   heroMeta.appendChild(el("span", "pill", SITE.location));
@@ -74,11 +100,26 @@
   /* ------------------------------ about ----------------------------- */
 
   const side = document.getElementById("aboutSide");
-  [
+  const sideRows = [
     { label: "Based in", val: SITE.location },
-    { label: "Email", val: SITE.email, href: "mailto:" + SITE.email },
-    { label: "GitHub", val: "AndyLu100", href: SITE.github }
-  ].forEach((row) => {
+    { label: "School", val: SITE.school },
+    { label: "GPA", val: SITE.gpa }
+  ];
+  if (SITE.email) {
+    sideRows.push({
+      label: "Email",
+      val: SITE.email,
+      href: "mailto:" + SITE.email
+    });
+  }
+  if (SITE.github) {
+    sideRows.push({
+      label: "GitHub",
+      val: SITE.github.replace(/^https?:\/\//, "").replace(/\/$/, ""),
+      href: SITE.github
+    });
+  }
+  sideRows.forEach((row) => {
     side.appendChild(el("div", "label", row.label));
     const v = el("div", "val");
     if (row.href) {
@@ -101,15 +142,32 @@
     aboutMain.appendChild(b);
   });
 
+  function bulletBlock(heading, items) {
+    if (!items || !items.length) return;
+    const b = el("div", "skill-block");
+    b.appendChild(el("h4", null, heading));
+    const ul = el("ul");
+    items.forEach((item) => ul.appendChild(el("li", null, item)));
+    b.appendChild(ul);
+    aboutMain.appendChild(b);
+  }
+
+  bulletBlock("Awards & honors", SITE.honors);
+  bulletBlock("Athletics", SITE.athletics);
+
   /* ------------------------------ footer ---------------------------- */
 
   document.getElementById("year").textContent = new Date().getFullYear();
+  const footerName = document.getElementById("footerName");
+  if (footerName) footerName.textContent = SITE.name;
   const footerLinks = document.getElementById("footerLinks");
-  [
-    { text: "Email", href: "mailto:" + SITE.email },
-    { text: "GitHub", href: SITE.github },
-    { text: "Resume", href: SITE.resume }
-  ].forEach((l) => {
+  const footerItems = [];
+  if (SITE.email) {
+    footerItems.push({ text: "Email", href: "mailto:" + SITE.email });
+  }
+  if (SITE.github) footerItems.push({ text: "GitHub", href: SITE.github });
+  if (SITE.resume) footerItems.push({ text: "Resume", href: SITE.resume });
+  footerItems.forEach((l) => {
     const a = el("a", null, l.text);
     a.href = l.href;
     if (!l.href.startsWith("mailto:")) {
