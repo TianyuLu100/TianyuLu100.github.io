@@ -423,18 +423,6 @@ const ENTRIES = [
         ]
       }
     ],
-    documents: [
-      {
-        kicker: "Results",
-        title: "ANSYS Fluent Contours for the Wing-Washout Cases",
-        authors: "Tianyu Lu",
-        venue: "School science project, 2024–2025",
-        summary:
-          "Pressure, velocity, and velocity-vector plots for the 0° and 5° washout sweeps. The 3° washout cases and the 5° washout case at 15° are titled in the workbook but have no contour images.",
-        href: "docs/wing-washout-fluent-results.pdf",
-        pages: 82
-      }
-    ],
     figuresHeading: "Selected contours",
     figures: [
       {
