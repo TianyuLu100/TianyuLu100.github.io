@@ -36,7 +36,7 @@ const SITE = {
   github: "",
   resume: "docs/al_resume_1.pdf",
   about: [
-    "I'm a student at the Texas Academy of Mathematics and Science at the University of North Texas in Denton (August 2025–May 2027, expected). TAMS is a residential early-college program; I take university coursework in grades 11–12. My current GPA is 3.889/4.00.",
+    "I'm a student at the Texas Academy of Mathematics and Science at the University of North Texas in Denton (August 2025–May 2027, expected). TAMS is a residential early-college program; I take university coursework in grades 11–12.",
     "I finished grades 9–10 at Jasper High School in Plano, Texas (August 2023–May 2025) before coming to TAMS.",
     "Most of my time goes to autonomous systems, drone hardware, and simulation — dispatching ground robots from aerial sensing, multi-camera perception, and studying how a design change shows up in the flow."
   ],
