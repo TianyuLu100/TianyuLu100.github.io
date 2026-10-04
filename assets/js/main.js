@@ -102,8 +102,7 @@
   const side = document.getElementById("aboutSide");
   const sideRows = [
     { label: "Based in", val: SITE.location },
-    { label: "School", val: SITE.school },
-    { label: "GPA", val: SITE.gpa }
+    { label: "School", val: SITE.school }
   ];
   if (SITE.email) {
     sideRows.push({
