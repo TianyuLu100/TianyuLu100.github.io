@@ -62,7 +62,7 @@ const SITE = {
     },
     {
       heading: "Languages",
-      items: "Python, Java, C++"
+      items: "Python, Java, C++, JavaScript, HTML, CSS"
     }
   ],
   honors: [
