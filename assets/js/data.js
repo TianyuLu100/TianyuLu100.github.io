@@ -411,7 +411,7 @@ const ENTRIES = [
     tags: ["Fundraising", "Service"],
     links: [],
     overview: [
-      "Grades 9–10, about an hour a week across the school year, with the Alliance of Youth Leaders in the United States."
+      "I volunteered with the Alliance of Youth Leaders in the United States, running concession stands and packing donated books."
     ],
     details: [
       {
@@ -435,11 +435,11 @@ const ENTRIES = [
     date: "Grades 11–12",
     image: "images/racingdrone2.png",
     blurb:
-      "With three teammates, integrated a racing drone, tuned the power-to-weight balance and radio setup, and flew the prototype after a pre-flight checklist.",
+      "Hardware and Flight Lead on a team pursuing the world drone speed record—integration, tuning, and maiden flight—with outreach to students and local communities.",
     tags: ["UAV", "Flight tuning", "3D printing", "Fluid dynamics"],
     links: [],
     overview: [
-      "I was responsible for getting the hardware to agree with itself and for the flying."
+      "Our team is dedicated to pushing the limits of aerial technology. Our primary goal is to break the world record for drone speed, setting a new benchmark for performance and engineering innovation. Along the way, we aim to share what we learn. In the future, we plan to educate and inspire the next generation of creators, bringing drone knowledge to local communities, students, and anyone passionate about flight."
     ],
     details: [
       {
