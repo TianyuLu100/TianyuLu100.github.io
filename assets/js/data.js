@@ -61,7 +61,7 @@ const SITE = {
         "Research writing; technical podcast scripting, recording, and production"
     },
     {
-      heading: "Languages",
+      heading: "Programming Languages",
       items: "Python, Java, C++, JavaScript, HTML, CSS"
     }
   ],
@@ -90,24 +90,69 @@ const ENTRIES = [
     role: "Student Researcher",
     org: "University of North Texas, Prof. Qing Yang's Lab",
     date: "Aug. 2025 — Present",
-    image: "images/ppo_vs_attn_ppo_robot3_no_wait_dashes_no_value_arrows.png",
+    image: "images/yang-lab-results.svg",
     imageFit: "contain",
     blurb:
-      "Developed an attention-enhanced proximal policy optimization model that dispatches unmanned ground vehicles from aerial sensing, first in Open-RMF logistics and then in a search-and-rescue setting.",
-    tags: ["PPO", "Open-RMF", "Reinforcement learning", "Python"],
+      "Built a ROS 2/Open-RMF experiment pipeline and an attention-enhanced PPO dispatcher for three UGVs receiving UAV-discovered tasks. In the current repeated-run batch, Attn-PPO reduced mean mission time by 16.0% versus PPO while improving workload balance.",
+    tags: [
+      "Attn-PPO",
+      "ROS 2",
+      "Open-RMF",
+      "Gazebo",
+      "Stable-Baselines3",
+      "Python",
+      "C++"
+    ],
     links: [],
     overview: [
-      "I work in Prof. Qing Yang's lab at the University of North Texas, about 15 hours a week through the school year, on learned dispatching for unmanned ground vehicles.",
-      "The dispatcher uses aerial sensing from a UAV. I studied task allocation first in an Open-RMF logistics environment, then adapted the same coordination problem to search and rescue, where a UAV locates targets and ground vehicles respond."
+      "I work in Prof. Qing Yang's lab at the University of North Texas. My research asks how a fleet should assign newly discovered tasks when every choice changes future robot queues, travel distance, and mission completion time.",
+      "I built the end-to-end experimental stack in ROS 2, Gazebo, and Open-RMF: a simulated UAV discovers red-cube targets, a learned policy assigns each task to one of three delivery robots, RMF executes the navigation request, and completion-monitoring and recorder nodes close the loop. The same interfaces let me compare learned policies with deterministic baselines without changing the robot-execution layer.",
+      "The current aggregated evaluation batch shows a meaningful trade-off. Attn-PPO reached the shortest mean mission time and lowest queue-count variance, while greedy scheduling retained lower local waiting time and movement distance. I therefore treat attention as a fleet-level scheduling improvement in this configuration, not as a universal winner on every objective."
     ],
     details: [
       {
-        heading: "What I did",
+        heading: "End-to-end system engineering",
         points: [
-          "Developed an attention-enhanced proximal policy optimization model to dispatch unmanned ground vehicles using aerial sensing from a UAV.",
-          "Implemented and evaluated scheduling simulations, analyzed the results, and revised the project when feasibility or the model itself got in the way.",
-          "Prepared a first-author manuscript, submitted on August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things. It is still under review.",
-          "In that manuscript, attention-enhanced PPO records the lowest total completion time and queue variance among the dispatchers compared on the reported test configuration."
+          "Orchestrated the airport-terminal experiment with a single launch pipeline that starts the RMF/Gazebo scene, task monitor, custom RMF task server, selected dispatcher, red-cube targets, UAV task-notification process, and CSV recorder in a controlled sequence.",
+          "Defined the ROS 2 dispatch loop: /task_monitor/start announces a target; the dispatcher combines that queue with /fleet_states; /submit_single_nav_task sends the selected robot and waypoint to the RMF adapter; and /custom_task_completion returns the outcome to the policy and recorder.",
+          "Implemented task completion around physical execution rather than a synthetic timeout. The monitor tracks deliveryRobot positions, confirms arrival and dwell near the target, submits the RMF completion event, and removes the corresponding Gazebo entity.",
+          "Kept decision logic replaceable: PPO, Attn-PPO, A2C, DQN, greedy, and round-robin dispatchers all use the same task source, RMF execution path, completion monitor, and data recorder."
+        ]
+      },
+      {
+        heading: "Attention-enhanced PPO",
+        points: [
+          "Formulated dispatching as a 63-feature observation: 3 × 7 robot features, 8 × 3 pending-task features, 9 global workload features, and 3 × 3 estimated start times. Four discrete actions select one of three UGVs or wait.",
+          "Converted the flat state into 12 entities—one global token, three robot tokens, and eight task tokens—and masked inactive task slots before attention. The encoder uses 64-dimensional embeddings, four self-attention heads, a residual connection with layer normalization, and a 128-dimensional output shared by PPO's policy and value functions.",
+          "Kept PPO's optimizer, reward, action space, and RMF interface fixed. The reward combines valid assignment, task waiting, travel distance, nonlinear queue congestion, completion, and estimated-makespan improvement.",
+          "Code-level qualification: the current attention extractor accepts the 63-dimensional observation for interface compatibility but tokenizes only the first 54 robot, task, and global features. The final nine estimated-start-time features are not consumed by its forward pass, so a strict feature-controlled PPO-versus-Attn-PPO ablation still requires aligning those inputs.",
+          "Trained through Stable-Baselines3 with a 3 × 10⁻⁴ learning rate, 2,048-step rollouts, batch size 64, discount factor 0.95, and masked attention over the varying pending-task set."
+        ]
+      },
+      {
+        heading: "Experimental design and instrumentation",
+        points: [
+          "Evaluated three delivery robots on 20 spatially distributed red-cube tasks in the Open-RMF airport-terminal map. The task-discovery layer releases a task every 20 seconds; up to eight pending tasks are visible to the policy.",
+          "Recorded end-to-end experiment time, completion rate, average waiting time, total and per-robot movement distance, task counts, idle ratios, and active-task count from the same ROS 2 topics for every dispatcher.",
+          "Built batch-test scripts for learned and heuristic policies and an analysis pipeline that extracts run-level metrics, computes mean and standard deviation, derives queue-count variance, and produces comparison figures.",
+          "Used CPU inference on a one-second dispatch cycle; the attention encoder processes only 12 tokens, keeping policy inference small relative to RMF navigation time."
+        ]
+      },
+      {
+        heading: "Current results",
+        points: [
+          "Across the current aggregated RMF evaluation batch, Attn-PPO recorded 633.14 ± 12.68 s mean completion time and 0.76 ± 0.65 queue-count variance—the best fleet-level values among the six evaluated dispatchers.",
+          "Against PPO-MLP, Attn-PPO reduced mean completion time from 753.64 s to 633.14 s (16.0%) and queue-count variance from 2.22 to 0.76 (65.8%). It was also 16.7% faster than A2C, 33.5% faster than greedy, and 46.9% faster than round-robin in this batch.",
+          "The result is multi-objective rather than uniformly dominant: greedy achieved the lowest mean waiting time (291.16 s) and per-robot movement distance (177.34 m), while Attn-PPO used 357.26 s and 189.14 m. Attention performed best when the objective emphasized overall mission completion and balanced robot queues.",
+          "The strongest conclusion is bounded to this simulation configuration and the available logged runs, which do not identify matched independent training seeds. The study currently uses one map, three UGVs, a fixed task pool, and UAV-assisted task discovery; feature-aligned ablations, matched seeds, additional layouts, higher arrival rates, and physical-robot transfer remain future work."
+        ]
+      },
+      {
+        heading: "Research communication",
+        points: [
+          "Prepared the project as a first-author manuscript covering the ROS 2/RMF architecture, MDP, attention encoder, controlled baselines, ablations, experimental trade-offs, and limitations.",
+          "Submitted the manuscript on August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things; it is under review.",
+          "Extended the original logistics formulation toward search-and-rescue scenarios, where aerial sensing supplies target locations and ground robots perform the response."
         ]
       }
     ],
@@ -120,20 +165,32 @@ const ENTRIES = [
         venue:
           "Submitted August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things. Under review.",
         summary:
-          "Compares PPO-based UGV dispatching, including an attention-enhanced encoder, with A2C, DQN, greedy, and round-robin scheduling in an Open-RMF simulation.",
+          "Presents the complete ROS 2/Open-RMF pipeline, 63-dimensional dispatching MDP, masked 12-token attention encoder, and a shared-pipeline comparison with PPO, A2C, DQN, greedy, and round-robin scheduling.",
         href: "docs/Attn_PPO_Paper_Draft (1).pdf"
       }
     ],
-    figuresHeading: "UAV-assisted UGV dispatching architecture",
+    figuresHeading: "System and evidence",
     figures: [
       {
-        src: "images/openrmfrl.png",
+        src: "images/yang-lab-system-architecture.svg",
         wide: true,
-        alt: "UAV-assisted UGV dispatching architecture in the Open-RMF airport-terminal simulation. The RL policy dispatches UGVs; UAV simulation supports target discovery and task notification.",
+        alt: "End-to-end ROS 2 and Open-RMF architecture for UAV-assisted UGV task dispatching, from target discovery through policy assignment, RMF execution, task completion, and data recording.",
         caption:
-          "UAV-assisted UGV dispatching architecture in the Open-RMF airport-terminal simulation. The RL policy dispatches UGVs; UAV simulation supports target discovery and task notification.",
+          "End-to-end experimental architecture. UAV-assisted target discovery feeds a replaceable dispatcher; the RMF adapter and fleet execute the assignment; completion events and recorded fleet state close the evaluation loop.",
         text: [
-          "The RL policy dispatches UGVs; UAV simulation supports target discovery and task notification."
+          "The software separates task discovery, decision making, and execution. That boundary made the experiment reproducible: every algorithm receives the same task notifications and fleet-state stream, then submits assignments through the same SingleNavTask service.",
+          "The current RL action controls only the three UGVs. The UAV supports sensing and task generation but is not yet a dispatchable agent."
+        ]
+      },
+      {
+        src: "images/yang-lab-results.svg",
+        wide: true,
+        alt: "Comparison of mean mission completion time for Attn-PPO, PPO, A2C, greedy, round-robin, and DQN, with a summary of waiting time, movement distance, and queue variance.",
+        caption:
+          "Current aggregated RMF evaluation batch. Lower is better for every metric; error bars show standard deviation where reported.",
+        text: [
+          "Attn-PPO is strongest on the two fleet-level objectives emphasized in this study: total completion time and workload balance. Its mean completion time is 16.0% below PPO's, and its queue-count variance is 65.8% lower.",
+          "Greedy remains an important baseline: it minimizes immediate waiting and travel in this map, but its mean mission completion time is longer. The comparison is evidence of an objective trade-off, not a claim that one policy dominates every metric."
         ]
       }
     ],
@@ -142,25 +199,57 @@ const ENTRIES = [
   {
     id: "autonomous-perception",
     kind: "experience",
-    title: "Multi-Camera Occupancy Perception",
+    title: "Dynamic Expert Routing for Multi-Task Vision (GiT)",
     role: "Research Assistant",
     org: "UNT Autonomous-Driving Perception Project",
     date: "Aug. 2025 — Present",
     image: "images/autodrive6camera.png",
     blurb:
-      "Built on MMDetection to train Transformer and occupancy models that place nearby vehicles relative to the ego vehicle, and compared six-camera training with a single view.",
-    tags: ["MMDetection", "Transformers", "Occupancy", "Multi-camera"],
+      "Extends GiT, a generalist vision model, with task-conditioned dual-expert routing across detection, segmentation, captioning, and grounding. Studies when tasks should share representations versus separate pathways, including KoLeo-based feature separation, routing visualizations, and ablations.",
+    tags: [
+      "GiT",
+      "Multi-task learning",
+      "Expert routing",
+      "KoLeo",
+      "Object detection",
+      "Segmentation",
+      "Visual grounding"
+    ],
     links: [],
     overview: [
-      "About five hours a week through the school year, on a perception stack that reads the scene around a vehicle from cameras."
+      "Learning When to Share: Dynamic Expert Routing for Multi-Task Vision in GiT builds on GiT, a generalist vision model, to ask when tasks such as object detection, instance segmentation, semantic segmentation, image captioning, and visual grounding should share knowledge and when they should use different computational pathways.",
+      "The project develops a dynamic, task-conditioned dual-expert routing architecture and evaluates whether feature-separation methods such as KoLeo can produce meaningful expert specialization. Analysis includes carefully aligned baselines, loss-curve studies, routing visualization, feature-distance measurements, and ablation experiments.",
+      "Preliminary findings suggest that simply increasing the distance between expert representations does not necessarily improve performance, and that visual tasks may form distinct collaborative families. The work therefore explores routing mechanisms that adaptively select experts according to the current input and generation state, with the goal of reducing interference in multi-task learning."
     ],
     details: [
       {
-        heading: "What I did",
+        heading: "Problem and motivation",
         points: [
-          "Used MMDetection as the base of a training pipeline that combines Transformer networks with occupancy modeling on multi-camera images.",
-          "Worked on locating nearby vehicles relative to the ego vehicle, and compared how stable and how expensive six-view training is against a single view.",
-          "Outlined a next step from perception into motion planning and trajectory prediction."
+          "Multi-task vision training can help related tasks transfer representation, but shared parameters also create interference when tasks need different features or decoding behavior.",
+          "GiT provides a single backbone for diverse vision-and-language outputs; the research question is how to route computation so collaboration happens where it helps and separation happens where it hurts."
+        ]
+      },
+      {
+        heading: "Methods",
+        points: [
+          "Implemented a task-conditioned dual-expert routing module on top of GiT so each forward pass can allocate features to one of two expert pathways based on task context and model state.",
+          "Compared routing-only designs against feature-separation objectives such as KoLeo, with baselines matched on capacity and training schedule so observed differences trace to routing and regularization rather than setup drift.",
+          "Tracked training dynamics with loss curves, expert-usage and routing maps, and pairwise feature-distance statistics to connect specialization patterns with downstream metrics."
+        ]
+      },
+      {
+        heading: "Preliminary findings",
+        points: [
+          "Pushing expert representations farther apart in feature space did not reliably improve task accuracy; separation alone is not a sufficient training signal for useful specialization.",
+          "Tasks clustered into collaborative families—groups that benefited from shared experts—rather than requiring a fixed one-expert-per-task partition.",
+          "Input- and state-dependent routing is the more promising direction for limiting cross-task interference while preserving shared structure where tasks align."
+        ]
+      },
+      {
+        heading: "My contribution",
+        points: [
+          "Ran model experiments, analyzed training and evaluation logs, and built visualizations that support hypothesis testing rather than one-off result plots.",
+          "Helped formulate concrete research questions—for example, when KoLeo helps routing versus when it only decorrelates features—and tested them against the empirical evidence from ablations and baselines."
         ]
       }
     ],
@@ -169,6 +258,7 @@ const ENTRIES = [
   {
     id: "stem-bridge",
     kind: "experience",
+    layout: "stem-rich",
     title: "Wind-Turbine Condition Monitoring",
     role: "Team Researcher",
     org: "UT Dallas STEM Bridge, advised by Dr. Jie Zhang",
@@ -176,8 +266,8 @@ const ENTRIES = [
     image: "images/utdwind.png",
     imageFit: "contain",
     blurb:
-      "Team project at UT Dallas: an LSTM that reads high-resolution generator signals and flags wind-turbine faults, tested on clean data and on noise at SNR 10.",
-    tags: ["LSTM", "Condition monitoring", "Wind turbines", "Python"],
+      "Team project at UT Dallas: graded generator inter-turn short circuits from three-phase current and discrete-Meyer wavelet coefficients. On clean simulated signals, LSTM and GRU both reached 100% test accuracy; noise at SNR 10 dropped validation F1 to 46.3%.",
+    tags: ["LSTM", "GRU", "2D CNN", "DWT", "Python"],
     links: [
       {
         label: "Yan, Senemmar, and Zhang, ASME J. Mech. Des. 2025",
@@ -185,62 +275,124 @@ const ENTRIES = [
       }
     ],
     overview: [
-      "Poster from the UT Dallas STEM Bridge camp: Machine Learning-Enabled Condition Monitoring of Wind Turbines Using High-Resolution Electrical Signals (UTD-011). I worked on it with Amanda Yin, Christopher Huang, Emily Yin, and Irene Liu. Advisor: Dr. Jie Zhang. Graduate assistants: Jingyi Yan and Fazlur Rahman Bin Karim.",
-      "About 15 hours a week for six weeks. The team received the program's Best Science Education Award."
+      "Team project at the UT Dallas STEM Bridge camp: Machine Learning-Enabled Condition Monitoring of Wind Turbines Using High-Resolution Electrical Signals (UTD-011). I worked on it with Amanda Yin, Christopher Huang, Emily Yin, and Irene Liu. Advisor: Dr. Jie Zhang. Graduate assistants: Jingyi Yan and Fazlur Rahman Bin Karim.",
+      "We learned the turbine, then Python visualization, then a condition monitor that reads the generator windings. The team received the program's Best Science Education Award.",
+      "The models follow the DOES Lab benchmark for inter-turn short-circuit faults. Each window of three-phase current, plus level-1 discrete Meyer wavelet coefficients, is labeled green (healthy or mild), yellow (moderate, still running), or red (severe)."
     ],
     details: [
       {
-        heading: "Problem and motivation",
+        heading: "Problem",
         points: [
-          "Wind turbines sit in the middle of renewable power, and maintenance is expensive: about 38% of turbine spending goes to upkeep, and the generator accounts for about 17% of failures.",
-          "The goal was a low-cost, reliable AI condition-monitoring system that keeps turbines running longer, cuts downtime, and makes wind energy more competitive."
+          "Maintenance is about 38% of wind-turbine spending, and the generator accounts for about 17% of failures. The camp goal was a low-cost monitor that flags winding faults early enough to cut downtime.",
+          "A plant already watches the gearbox (vibration, oil temperature, particle count), the generator (temperature, vibration, insulation resistance, SCADA), the blades, the shaft and bearings, and the tower. We used current from the windings, the electrical measurement the generator already produces."
         ]
       },
       {
-        heading: "What plants monitor today",
+        heading: "Signals and features",
         points: [
-          "Gearbox: vibration, oil temperature, and particle count.",
-          "Generator: temperature, vibration, insulation resistance, and SCADA data.",
-          "Rotor blades: acoustic emissions and strain gauges.",
-          "Main shaft and bearings: vibration and temperature.",
-          "Tower and structure: accelerometers and tilt sensors.",
-          "Typical sensors are accelerometers, thermocouples, oil-debris sensors, and current and voltage transducers."
+          "Each fault file is a simulated stator record from 0.05 s to 80 s, sampled every 0.25 ms, with columns for time, phase currents A/B/C, and the matching discrete-Meyer (dmey) level-1 approximation coefficients.",
+          "Filenames encode the faulted phase, a resistance parameter R, and a fault-winding ratio fwr. The lab scenario table maps each pair onto green, yellow, or red. A higher fault resistance is a milder short, so two files with the same winding ratio can sit in different classes.",
+          "We also plotted a year of 10-minute SCADA from Kelmarsh turbine 1 (2020, about 52,700 rows: wind speed, power, energy export, and lost production) to learn the operating data before moving to the high-rate current records.",
+          "A discrete wavelet transform places each frequency in time, which fits a non-stationary current. The approximation coefficients carry the slow trend; the detail coefficients carry short transients."
         ]
       },
       {
-        heading: "Technical approach",
+        heading: "How a window becomes a label",
         points: [
-          "We started from the parts of a turbine, then learned data visualization and machine learning in Python.",
-          "The monitor is a recurrent network trained on wind-turbine data to detect faults. It watches the generator, and specifically the windings.",
-          "We used an LSTM rather than a plain RNN so the model can remember a time series without vanishing or exploding gradients. A hidden state carries information from one time step to the next."
+          "Training uses the steady 20–40 s of each record. Currents are divided by 4,000 and wavelet coefficients by 60, then cut into windows of 50 time steps, so one example is a 50 × 6 tensor.",
+          "The split is temporal inside each scenario: 0–30% and 50–90% train, 30–40% validate, and 40–50% plus 90–100% test. Windows are shuffled after the cut, and the training set is randomly oversampled so no class is the majority.",
+          "The test windows are new slices of faults the model has already seen, not held-out severities or turbines. A perfect score on clean simulation shows that the classes separate in this representation. It does not show that the monitor would grade a new machine."
         ]
       },
       {
-        heading: "Results",
+        heading: "Models",
         points: [
-          "On clean signals, training and validation were both perfect: F1 100% and accuracy 100%.",
-          "With noise at SNR 10, training F1 was 96.1% and training accuracy was 62.6%. Validation dropped to 46.3% F1 and 46.0% accuracy."
+          "The monitor is an LSTM, so a fault pattern can persist in the cell state instead of vanishing across the window. Stack: LSTM 24, 48, 48, and 24 units, dropout 0.1 after each layer, then a 3-way softmax. Loss is categorical cross-entropy, the optimizer is Adam, and the tracked metric is F1.",
+          "The same windows also trained a GRU with the same widths (dropout 0.1, 0.2, 0.2, 0.1) and a 2D CNN: 24 and 48 filters of size 2×2, then two dense layers of 48. Recurrent models ran 15 epochs at batch 768; the CNN used batch 512.",
+          "On a GPU the 15-epoch LSTM fit took about 781 s and the GRU about 824 s. The CNN finished in about 145 s."
         ]
       },
       {
-        heading: "Conclusions",
+        heading: "Clean-signal results",
         points: [
-          "Machine-learning monitors can catch turbine faults and support maintenance decisions.",
-          "Operations and maintenance spending grows with the wind market, so a data-driven monitor addresses a need that gets larger as the industry expands.",
-          "The poster cites Yan, Senemmar, and Zhang, “Bi-Level Interturn Short-Circuit Fault Monitoring for Wind Turbine Generators With Benchmark Dataset Development,” ASME Journal of Mechanical Design, April 2025."
+          "LSTM and GRU both scored 100% accuracy and macro F1 on the validation windows and on the test windows (about 831,000 test windows, confusion matrices with an empty off-diagonal).",
+          "The 2D CNN reached 98.79% test accuracy and 0.9876 macro F1. Every red window was correct. The mistakes sit between green and yellow: about 5,500 green windows called yellow and about 4,600 yellow windows called green."
+        ]
+      },
+      {
+        heading: "Noise",
+        points: [
+          "With noise at SNR 10, training F1 stays high at 96.1%, but training accuracy is 62.6%. Validation falls to 46.3% F1 and 46.0% accuracy.",
+          "That gap is the limit of the result. Clean simulated current is easy for an LSTM once every severity has been seen; the same model does not hold its score when the current is noisy. A usable monitor still needs denoising, augmentation, or features that survive SNR 10, plus a split that holds out severities the model has never trained on."
         ]
       }
     ],
-    figuresHeading: "LSTM monitor",
+    figuresHeading: "Signals and test-set confusion",
     figures: [
       {
         src: "images/utdwind.png",
         wide: true,
-        alt: "Wind turbine, generator windings, and an LSTM that reads the electrical signal over time",
+        alt: "Wind turbine, generator windings, and an LSTM cell that reads the electrical signal over time",
         caption:
-          "The monitor reads the generator windings as a time series and classifies the signal with an LSTM.",
+          "The monitor reads the generator windings as a time series and classifies the window with an LSTM.",
         text: [
-          "Current and voltage from the windings go in as the sequence x. The LSTM keeps a cell state and a hidden state so a fault pattern can show up across time, not only in a single sample."
+          "Phase currents enter as the sequence x. The cell state C and the hidden state h carry a fault pattern from one step to the next."
+        ]
+      },
+      {
+        src: "images/stem-dwt.png",
+        wide: true,
+        alt: "Discrete wavelet transform of a time series with a db4 wavelet: original signal, level-3 approximation, and detail coefficients at levels 3, 2, and 1",
+        caption:
+          "Discrete wavelet transform with a db4 wavelet. Approximation coefficients keep the slow shape; detail coefficients keep the short spikes.",
+        text: [
+          "The fault records use discrete Meyer at one level. This db4 example shows the same split: low-frequency trend in the approximation, transients in the details."
+        ]
+      },
+      {
+        src: "images/stem-current.png",
+        wide: true,
+        alt: "Phase A stator current over 80 seconds of a normal-operation simulation, active from about 18 to 62 seconds",
+        caption:
+          "Normal operation, phase A current. The machine is running from about 18 s to 62 s; the model sees only 20–40 s.",
+        text: [
+          "The same plot for a fault file is the raw input, before the current is scaled by 4,000 and stacked with the other two phases."
+        ]
+      },
+      {
+        src: "images/stem-coef.png",
+        wide: true,
+        alt: "Discrete Meyer approximation coefficients for phases A, B, and C during normal operation",
+        caption:
+          "Level-1 discrete-Meyer approximation coefficients for phases A, B, and C on the same normal run.",
+        text: [
+          "These three series are the other half of each window. On a clean record they are smooth and large only while the machine is producing current, which is why a classifier can separate the lab scenarios before any noise is added."
+        ]
+      },
+      {
+        src: "images/stem-cm-lstm.png",
+        alt: "LSTM test confusion matrix with all mass on the diagonal for classes 0, 1, and 2",
+        caption:
+          "LSTM test confusion matrix. Classes 0, 1, and 2 are green, yellow, and red.",
+        text: [
+          "Every test window landed on the diagonal. The GRU matrix is the same pattern. Both scores are on clean windows drawn from scenarios that also appear in training."
+        ]
+      },
+      {
+        src: "images/stem-cm-gru.png",
+        alt: "GRU test confusion matrix with all mass on the diagonal",
+        caption: "GRU test confusion matrix, same split and same clean records.",
+        text: [
+          "GRU matched the LSTM score. The 15-epoch fit took about 824 s, against about 781 s for the LSTM."
+        ]
+      },
+      {
+        src: "images/stem-cm-cnn.png",
+        alt: "2D CNN test confusion matrix with residual errors between classes 0 and 1 and none in class 2",
+        caption:
+          "2D CNN test confusion matrix. Red is exact; the remaining errors are green versus yellow.",
+        text: [
+          "The CNN is the practical comparison: about five times faster to train, and 98.79% accurate, with the residual confined to the two neighboring classes."
         ]
       }
     ],
@@ -287,7 +439,7 @@ const ENTRIES = [
     tags: ["UAV", "Flight tuning", "3D printing", "Fluid dynamics"],
     links: [],
     overview: [
-      "A ten-week build, about 25 hours a week. I was responsible for getting the hardware to agree with itself and for the flying."
+      "I was responsible for getting the hardware to agree with itself and for the flying."
     ],
     details: [
       {
@@ -400,7 +552,7 @@ const ENTRIES = [
     tags: ["ANSYS Fluent", "SST k-omega", "Aerodynamics"],
     links: [],
     overview: [
-      "Grade 10, about 10 hours a week for eight weeks. I presented the project at the school science fair.",
+      "I presented the project at the school science fair.",
       "The Fluent workbook is a plot book, not a written report. Each case is named 737-washout-angle: washout of 0°, 3°, or 5°, and angle of attack from 0° to 18° in steps of 3°. For every case I saved static pressure, velocity, and velocity vectors on the symmetry plane, on a cut 3 m from the root (root airfoil), on a cut 7 m from the root (tip airfoil), and on a cut 10 m from the root (the tip)."
     ],
     details: [

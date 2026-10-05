@@ -42,6 +42,24 @@
 
   document.title = entry.title + " — " + SITE.name;
 
+  /* The wind-turbine entry is a visual case study rather than the standard
+     prose-and-sidebar layout. It keeps this page URL and the portfolio
+     header/footer, while its renderer owns the content in between. */
+  if (
+    entry.layout === "stem-rich" &&
+    typeof renderStemBridgePage === "function"
+  ) {
+    document.body.classList.add("stem-rich-page");
+    renderStemBridgePage(root, entry);
+
+    const header = document.getElementById("siteHeader");
+    const onScroll = () =>
+      header.classList.toggle("is-stuck", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return;
+  }
+
   /* ------------------------------- head ------------------------------ */
 
   const head = el("section", "entry-head");
