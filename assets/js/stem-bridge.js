@@ -29,10 +29,6 @@ function renderStemBridgePage(root, entry) {
           Grading generator inter-turn short-circuit faults from high-resolution
           three-phase current and discrete-wavelet features.
         </p>
-        <div class="stem-people">
-          <p><strong>Team:</strong> Amanda Yin, Christopher Huang, Emily Yin, Irene Liu, and Tianyu Lu</p>
-          <p><strong>Advisor:</strong> Dr. Jie Zhang · <strong>Graduate assistants:</strong> Jingyi Yan and Fazlur Rahman Bin Karim</p>
-        </div>
         <div class="stem-stats" aria-label="Project highlights">
           <article class="stem-stat">
             <strong data-stem-count="100" data-suffix="%">100%</strong>
