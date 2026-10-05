@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">RMF Airport-Terminal Dispatching Results</title>
+  <desc id="desc">Mean mission completion time with standard deviation for six dispatching algorithms, plus waiting time, movement distance, and queue variance from the current aggregated evaluation batch.</desc>
+  <defs>
+    <style>
+      .title { font: 700 38px Inter, Arial, sans-serif; fill: #142238; }
+      .subtitle { font: 400 18px Inter, Arial, sans-serif; fill: #5c6878; }
+      .section { font: 700 17px Inter, Arial, sans-serif; fill: #2368a2; letter-spacing: 1.1px; }
+      .axis { font: 400 14px Inter, Arial, sans-serif; fill: #687587; }
+      .label { font: 600 15px Inter, Arial, sans-serif; fill: #26364b; }
+      .bar-value { font: 700 15px Inter, Arial, sans-serif; fill: #142238; }
+      .head { font: 700 14px Inter, Arial, sans-serif; fill: #526072; }
+      .cell { font: 500 14px "SFMono-Regular", Consolas, monospace; fill: #26364b; }
+      .cell-attn { font: 700 14px "SFMono-Regular", Consolas, monospace; fill: #2368a2; }
+      .note { font: 400 14px Inter, Arial, sans-serif; fill: #5c6878; }
+      .callout-value { font: 700 31px Inter, Arial, sans-serif; fill: #2368a2; }
+      .callout-label { font: 500 14px Inter, Arial, sans-serif; fill: #526072; }
+      .grid { stroke: #e1e6ec; stroke-width: 1; }
+      .axis-line { stroke: #9ba8b7; stroke-width: 1.5; }
+      .error { stroke: #26364b; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" fill="#ffffff"/>
+  <text x="70" y="68" class="title">RMF Airport-Terminal Dispatching Results</text>
+  <text x="70" y="101" class="subtitle">Current aggregated evaluation batch | mean +/- standard deviation | lower is better</text>
+
+  <rect x="60" y="140" width="920" height="650" rx="14" fill="#fbfcfd" stroke="#d8dfe7" stroke-width="2"/>
+  <text x="88" y="178" class="section">MEAN MISSION COMPLETION TIME</text>
+
+  <line x1="120" y1="680" x2="940" y2="680" class="axis-line"/>
+  <line x1="120" y1="180" x2="120" y2="680" class="axis-line"/>
+
+  <line x1="120" y1="680" x2="940" y2="680" class="grid"/>
+  <line x1="120" y1="596.7" x2="940" y2="596.7" class="grid"/>
+  <line x1="120" y1="513.3" x2="940" y2="513.3" class="grid"/>
+  <line x1="120" y1="430" x2="940" y2="430" class="grid"/>
+  <line x1="120" y1="346.7" x2="940" y2="346.7" class="grid"/>
+  <line x1="120" y1="263.3" x2="940" y2="263.3" class="grid"/>
+  <line x1="120" y1="180" x2="940" y2="180" class="grid"/>
+
+  <text x="102" y="685" text-anchor="end" class="axis">0</text>
+  <text x="102" y="601.7" text-anchor="end" class="axis">300</text>
+  <text x="102" y="518.3" text-anchor="end" class="axis">600</text>
+  <text x="102" y="435" text-anchor="end" class="axis">900</text>
+  <text x="102" y="351.7" text-anchor="end" class="axis">1,200</text>
+  <text x="102" y="268.3" text-anchor="end" class="axis">1,500</text>
+  <text x="102" y="185" text-anchor="end" class="axis">1,800 s</text>
+
+  <rect x="145" y="504.1" width="90" height="175.9" rx="4" fill="#2368a2"/>
+  <line x1="190" y1="500.6" x2="190" y2="507.6" class="error"/>
+  <line x1="179" y1="500.6" x2="201" y2="500.6" class="error"/>
+  <line x1="179" y1="507.6" x2="201" y2="507.6" class="error"/>
+  <text x="190" y="486" text-anchor="middle" class="bar-value">633.14</text>
+  <text x="190" y="712" text-anchor="middle" class="label">Attn-PPO</text>
+
+  <rect x="280" y="470.7" width="90" height="209.3" rx="4" fill="#66788c"/>
+  <line x1="325" y1="468.3" x2="325" y2="473.1" class="error"/>
+  <line x1="314" y1="468.3" x2="336" y2="468.3" class="error"/>
+  <line x1="314" y1="473.1" x2="336" y2="473.1" class="error"/>
+  <text x="325" y="452" text-anchor="middle" class="bar-value">753.64</text>
+  <text x="325" y="712" text-anchor="middle" class="label">PPO</text>
+
+  <rect x="415" y="468.9" width="90" height="211.1" rx="4" fill="#8795a5"/>
+  <line x1="460" y1="465.5" x2="460" y2="472.3" class="error"/>
+  <line x1="449" y1="465.5" x2="471" y2="465.5" class="error"/>
+  <line x1="449" y1="472.3" x2="471" y2="472.3" class="error"/>
+  <text x="460" y="450" text-anchor="middle" class="bar-value">759.90</text>
+  <text x="460" y="712" text-anchor="middle" class="label">A2C</text>
+
+  <rect x="550" y="415.6" width="90" height="264.4" rx="4" fill="#a4aebb"/>
+  <line x1="595" y1="381.9" x2="595" y2="449.3" class="error"/>
+  <line x1="584" y1="381.9" x2="606" y2="381.9" class="error"/>
+  <line x1="584" y1="449.3" x2="606" y2="449.3" class="error"/>
+  <text x="595" y="366" text-anchor="middle" class="bar-value">951.82</text>
+  <text x="595" y="712" text-anchor="middle" class="label">Greedy</text>
+
+  <rect x="685" y="348.5" width="90" height="331.5" rx="4" fill="#c0c7d0"/>
+  <line x1="730" y1="308.2" x2="730" y2="388.8" class="error"/>
+  <line x1="719" y1="308.2" x2="741" y2="308.2" class="error"/>
+  <line x1="719" y1="388.8" x2="741" y2="388.8" class="error"/>
+  <text x="730" y="292" text-anchor="middle" class="bar-value">1,193.40</text>
+  <text x="730" y="712" text-anchor="middle" class="label">Round-robin</text>
+
+  <rect x="820" y="231.2" width="90" height="448.8" rx="4" fill="#d0d5dc"/>
+  <line x1="865" y1="180" x2="865" y2="463.1" class="error"/>
+  <line x1="854" y1="180" x2="876" y2="180" class="error"/>
+  <line x1="854" y1="463.1" x2="876" y2="463.1" class="error"/>
+  <text x="884" y="194" class="axis">upper SD clipped</text>
+  <text x="865" y="216" text-anchor="middle" class="bar-value">1,615.54</text>
+  <text x="865" y="712" text-anchor="middle" class="label">DQN</text>
+
+  <text x="530" y="757" text-anchor="middle" class="axis">Dispatcher</text>
+  <text x="36" y="430" transform="rotate(-90 36 430)" text-anchor="middle" class="axis">Completion time (seconds)</text>
+
+  <rect x="1010" y="140" width="530" height="650" rx="14" fill="#ffffff" stroke="#d8dfe7" stroke-width="2"/>
+  <text x="1038" y="178" class="section">OBJECTIVE TRADE-OFFS</text>
+
+  <g transform="translate(1040,210)">
+    <rect width="220" height="98" rx="8" fill="#eef6fc" stroke="#b9d6eb"/>
+    <text x="18" y="40" class="callout-value">16.0%</text>
+    <text x="18" y="68" class="callout-label">faster than PPO</text>
+    <text x="18" y="87" class="note">mean completion time</text>
+  </g>
+
+  <g transform="translate(1285,210)">
+    <rect width="220" height="98" rx="8" fill="#eef6fc" stroke="#b9d6eb"/>
+    <text x="18" y="40" class="callout-value">65.8%</text>
+    <text x="18" y="68" class="callout-label">lower than PPO</text>
+    <text x="18" y="87" class="note">queue-count variance</text>
+  </g>
+
+  <text x="1040" y="354" class="head">Algorithm</text>
+  <text x="1245" y="340" text-anchor="middle" class="head">Mean wait</text>
+  <text x="1245" y="358" text-anchor="middle" class="head">(s)</text>
+  <text x="1362" y="340" text-anchor="middle" class="head">Move / robot</text>
+  <text x="1362" y="358" text-anchor="middle" class="head">(m)</text>
+  <text x="1472" y="340" text-anchor="middle" class="head">Queue</text>
+  <text x="1472" y="358" text-anchor="middle" class="head">variance</text>
+  <line x1="1040" y1="374" x2="1508" y2="374" class="grid"/>
+
+  <rect x="1032" y="383" width="484" height="48" rx="5" fill="#eef6fc"/>
+  <text x="1045" y="414" class="cell-attn">Attn-PPO</text>
+  <text x="1245" y="414" text-anchor="middle" class="cell-attn">357.26</text>
+  <text x="1362" y="414" text-anchor="middle" class="cell-attn">189.14</text>
+  <text x="1472" y="414" text-anchor="middle" class="cell-attn">0.76</text>
+
+  <text x="1045" y="463" class="cell">PPO</text>
+  <text x="1245" y="463" text-anchor="middle" class="cell">327.93</text>
+  <text x="1362" y="463" text-anchor="middle" class="cell">180.23</text>
+  <text x="1472" y="463" text-anchor="middle" class="cell">2.22</text>
+
+  <text x="1045" y="511" class="cell">A2C</text>
+  <text x="1245" y="511" text-anchor="middle" class="cell">313.64</text>
+  <text x="1362" y="511" text-anchor="middle" class="cell">183.44</text>
+  <text x="1472" y="511" text-anchor="middle" class="cell">1.16</text>
+
+  <text x="1045" y="559" class="cell">Greedy</text>
+  <text x="1245" y="559" text-anchor="middle" class="cell">291.16</text>
+  <text x="1362" y="559" text-anchor="middle" class="cell">177.34</text>
+  <text x="1472" y="559" text-anchor="middle" class="cell">1.56</text>
+
+  <text x="1045" y="607" class="cell">Round-robin</text>
+  <text x="1245" y="607" text-anchor="middle" class="cell">603.66</text>
+  <text x="1362" y="607" text-anchor="middle" class="cell">441.99</text>
+  <text x="1472" y="607" text-anchor="middle" class="cell">3.82</text>
+
+  <text x="1045" y="655" class="cell">DQN</text>
+  <text x="1245" y="655" text-anchor="middle" class="cell">353.56</text>
+  <text x="1362" y="655" text-anchor="middle" class="cell">299.36</text>
+  <text x="1472" y="655" text-anchor="middle" class="cell">6.49</text>
+
+  <line x1="1040" y1="680" x2="1508" y2="680" class="grid"/>
+  <text x="1040" y="714" class="note">Attn-PPO: best mission time and queue balance.</text>
+  <text x="1040" y="742" class="note">Greedy: best local wait and travel metrics.</text>
+  <text x="1040" y="770" class="note">The result is a multi-objective trade-off.</text>
+
+  <rect x="60" y="825" width="1480" height="70" rx="9" fill="#f7f8fa" stroke="#e1e6ec"/>
+  <text x="84" y="855" class="note">Scope: Open-RMF airport-terminal simulation, three UGVs, 20-task streams, and the current available repeated-run batch.</text>
+  <text x="84" y="880" class="note">These results support the reported configuration; matched seeds, additional maps, arrival rates, and physical deployment remain future validation.</text>
+</svg>

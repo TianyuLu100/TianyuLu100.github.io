@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">UAV-Assisted UGV Task Dispatching Architecture</title>
+  <desc id="desc">ROS 2 and Open-RMF pipeline from UAV-assisted task discovery through attention-enhanced dispatching, RMF navigation, completion monitoring, and experiment recording.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#2368a2"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#c46a24"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Inter, Arial, sans-serif; fill: #142238; }
+      .subtitle { font: 400 18px Inter, Arial, sans-serif; fill: #5c6878; }
+      .section { font: 700 17px Inter, Arial, sans-serif; fill: #2368a2; letter-spacing: 1.2px; }
+      .node-title { font: 700 20px Inter, Arial, sans-serif; fill: #142238; }
+      .node-sub { font: 400 15px Inter, Arial, sans-serif; fill: #5c6878; }
+      .topic { font: 600 14px "SFMono-Regular", Consolas, monospace; fill: #2368a2; }
+      .external-topic { font: 600 14px "SFMono-Regular", Consolas, monospace; fill: #a95416; }
+      .small { font: 400 14px Inter, Arial, sans-serif; fill: #5c6878; }
+      .tiny { font: 400 13px Inter, Arial, sans-serif; fill: #667384; }
+      .box { fill: #ffffff; stroke: #94a4b7; stroke-width: 2; }
+      .core { fill: #eef6fc; stroke: #2368a2; stroke-width: 3; }
+      .external { fill: #fff6ed; stroke: #c46a24; stroke-width: 2.5; }
+      .data { fill: #f7f8fa; stroke: #7c8998; stroke-width: 2; }
+      .lane { fill: #fbfcfd; stroke: #d8dfe7; stroke-width: 2; }
+      .blue-line { fill: none; stroke: #2368a2; stroke-width: 2.5; marker-end: url(#arrow-blue); }
+      .orange-line { fill: none; stroke: #c46a24; stroke-width: 2.5; marker-end: url(#arrow-orange); }
+      .feedback { fill: none; stroke: #2368a2; stroke-width: 2.5; stroke-dasharray: 8 6; marker-end: url(#arrow-blue); }
+      .data-line { fill: none; stroke: #7c8998; stroke-width: 2; stroke-dasharray: 5 5; marker-end: url(#arrow-blue); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" fill="#ffffff"/>
+
+  <text x="70" y="68" class="title">UAV-Assisted UGV Task Dispatching</text>
+  <text x="70" y="100" class="subtitle">ROS 2 | Gazebo | Open-RMF | Stable-Baselines3</text>
+
+  <g transform="translate(1120,46)">
+    <line x1="0" y1="5" x2="54" y2="5" class="blue-line"/>
+    <text x="68" y="10" class="small">ROS 2 interface</text>
+    <line x1="0" y1="35" x2="54" y2="35" class="orange-line"/>
+    <text x="68" y="40" class="small">External execution system</text>
+  </g>
+
+  <rect x="60" y="140" width="1480" height="430" rx="14" class="lane"/>
+  <text x="88" y="178" class="section">ONLINE DISPATCH AND EXECUTION LOOP</text>
+
+  <g transform="translate(95,220)">
+    <rect width="245" height="135" rx="10" class="box"/>
+    <text x="122.5" y="42" text-anchor="middle" class="node-title">Task Discovery</text>
+    <text x="122.5" y="72" text-anchor="middle" class="node-sub">image_processing</text>
+    <text x="122.5" y="102" text-anchor="middle" class="node-sub">UAV waypoint / red cube</text>
+  </g>
+
+  <g transform="translate(460,205)">
+    <rect width="285" height="165" rx="10" class="core"/>
+    <text x="142.5" y="40" text-anchor="middle" class="node-title">RL / Baseline Dispatcher</text>
+    <text x="142.5" y="70" text-anchor="middle" class="node-sub">rl_dispatcher</text>
+    <text x="142.5" y="104" text-anchor="middle" class="node-sub">Attn-PPO | PPO | A2C | DQN</text>
+    <text x="142.5" y="130" text-anchor="middle" class="node-sub">Greedy | Round-robin</text>
+  </g>
+
+  <g transform="translate(865,220)">
+    <rect width="245" height="135" rx="10" class="box"/>
+    <text x="122.5" y="42" text-anchor="middle" class="node-title">RMF Task Adapter</text>
+    <text x="122.5" y="72" text-anchor="middle" class="node-sub">rmf_custom_tasks_self</text>
+    <text x="122.5" y="102" text-anchor="middle" class="node-sub">SingleNavTask to RMF API</text>
+  </g>
+
+  <g transform="translate(1230,205)">
+    <rect width="255" height="165" rx="10" class="external"/>
+    <text x="127.5" y="40" text-anchor="middle" class="node-title">Open-RMF</text>
+    <text x="127.5" y="70" text-anchor="middle" class="node-sub">Airport Terminal</text>
+    <text x="127.5" y="103" text-anchor="middle" class="node-sub">deliveryRobot_0 / _1 / _2</text>
+    <text x="127.5" y="131" text-anchor="middle" class="node-sub">navigation and fleet state</text>
+  </g>
+
+  <path d="M340 287 H460" class="blue-line"/>
+  <text x="400" y="270" text-anchor="middle" class="topic">/task_monitor/start</text>
+
+  <path d="M745 287 H865" class="blue-line"/>
+  <text x="805" y="258" text-anchor="middle" class="topic">/submit_single_nav_task</text>
+  <text x="805" y="278" text-anchor="middle" class="tiny">robot + target waypoint</text>
+
+  <path d="M1110 287 H1230" class="orange-line"/>
+  <text x="1170" y="270" text-anchor="middle" class="external-topic">/task_api_requests</text>
+
+  <g transform="translate(665,420)">
+    <rect width="300" height="105" rx="10" class="box"/>
+    <text x="150" y="36" text-anchor="middle" class="node-title">Completion Monitor</text>
+    <text x="150" y="65" text-anchor="middle" class="node-sub">robot_dispose_adapter</text>
+    <text x="150" y="89" text-anchor="middle" class="node-sub">arrival + dwell + disposal</text>
+  </g>
+
+  <g transform="translate(105,420)">
+    <rect width="290" height="105" rx="10" class="data"/>
+    <text x="145" y="36" text-anchor="middle" class="node-title">Experiment Recorder</text>
+    <text x="145" y="65" text-anchor="middle" class="node-sub">data_collect</text>
+    <text x="145" y="89" text-anchor="middle" class="node-sub">time | queues | distance | CSV</text>
+  </g>
+
+  <g transform="translate(1230,425)">
+    <rect width="255" height="95" rx="10" class="external"/>
+    <text x="127.5" y="39" text-anchor="middle" class="node-title">Gazebo</text>
+    <text x="127.5" y="68" text-anchor="middle" class="node-sub">target entity lifecycle</text>
+  </g>
+
+  <path d="M1357 370 V392 H815 V420" class="orange-line"/>
+  <text x="1080" y="389" text-anchor="middle" class="external-topic">/fleet_states</text>
+
+  <path d="M665 472 H602 V370" class="feedback"/>
+  <text x="570" y="450" text-anchor="middle" class="topic">/custom_task_completion</text>
+
+  <path d="M965 472 H1230" class="orange-line"/>
+  <text x="1098" y="454" text-anchor="middle" class="external-topic">/delete_entity</text>
+
+  <path d="M665 505 H395" class="data-line"/>
+  <text x="530" y="495" text-anchor="middle" class="tiny">completion events</text>
+  <path d="M250 355 V420" class="data-line"/>
+  <text x="265" y="395" class="tiny">task start</text>
+  <path d="M1230 350 H1165 V545 H395" class="data-line"/>
+  <text x="1095" y="540" text-anchor="middle" class="tiny">fleet states</text>
+
+  <rect x="60" y="610" width="1480" height="265" rx="14" class="lane"/>
+  <text x="88" y="648" class="section">ATTENTION-ENHANCED POLICY REPRESENTATION</text>
+
+  <g transform="translate(95,690)">
+    <rect width="235" height="120" rx="9" class="data"/>
+    <text x="117.5" y="34" text-anchor="middle" class="node-title">63-D Environment State</text>
+    <text x="117.5" y="65" text-anchor="middle" class="node-sub">54-D used by attention</text>
+    <text x="117.5" y="91" text-anchor="middle" class="node-sub">9-D start estimates unused</text>
+  </g>
+
+  <path d="M330 750 H425" class="blue-line"/>
+  <text x="378" y="734" text-anchor="middle" class="tiny">current slice</text>
+
+  <g transform="translate(425,675)">
+    <rect width="275" height="150" rx="9" class="box"/>
+    <text x="137.5" y="34" text-anchor="middle" class="node-title">12 Structured Tokens</text>
+    <text x="137.5" y="68" text-anchor="middle" class="node-sub">1 global + 3 robot + 8 task</text>
+    <text x="137.5" y="97" text-anchor="middle" class="node-sub">64-D shared embedding</text>
+    <text x="137.5" y="124" text-anchor="middle" class="node-sub">inactive tasks are masked</text>
+  </g>
+
+  <path d="M700 750 H795" class="blue-line"/>
+
+  <g transform="translate(795,675)">
+    <rect width="265" height="150" rx="9" class="core"/>
+    <text x="132.5" y="34" text-anchor="middle" class="node-title">Self-Attention</text>
+    <text x="132.5" y="68" text-anchor="middle" class="node-sub">4 heads</text>
+    <text x="132.5" y="97" text-anchor="middle" class="node-sub">residual + LayerNorm</text>
+    <text x="132.5" y="124" text-anchor="middle" class="node-sub">robot-task interaction</text>
+  </g>
+
+  <path d="M1060 750 H1155" class="blue-line"/>
+
+  <g transform="translate(1155,690)">
+    <rect width="300" height="120" rx="9" class="box"/>
+    <text x="150" y="36" text-anchor="middle" class="node-title">PPO Policy &amp; Value</text>
+    <text x="150" y="67" text-anchor="middle" class="node-sub">global + robot tokens to 128-D</text>
+    <text x="150" y="92" text-anchor="middle" class="node-sub">choose UGV 0 / 1 / 2 / wait</text>
+  </g>
+
+  <text x="80" y="915" class="tiny">Scope: the UAV supplies task discovery in the current experiment; the learned action space dispatches UGVs only.</text>
+</svg>
