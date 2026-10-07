@@ -64,20 +64,6 @@ const SITE = {
       heading: "Programming Languages",
       items: "Python, Java, C++, JavaScript, HTML, CSS"
     }
-  ],
-  honors: [
-    "UNT Undergraduate Research Fellowship (grades 11–12)",
-    "USA Mathematical Olympiad (USAMO) qualifier; AIME best score 12/15 (grade 11)",
-    "AMC 10 Distinguished Honor Roll, top 1%; AMC 12 Distinction, top 5% (grades 10–11)",
-    "USA Physics Olympiad (USAPhO) qualifier via the F=ma exam (grade 10)",
-    "Physics Bowl, 2nd-place team in Texas, Region 11, Division 1 (grade 10)",
-    "Plano ISD Superintendent's Scholar Award, district-wide (grade 10)",
-    "Best Science Education Award, UTD STEM Bridge Summer Research Camp (grade 10)"
-  ],
-  athletics: [
-    "Point guard, TAMS basketball (2023–present). Played in the UNT Open Basketball Tournament, and keep a near-daily strength and running routine from middle school.",
-    "TAMS table tennis (2023–present). Weekly singles and doubles, with forehand and backhand footwork drills.",
-    "Competitive bridge (2014–2023). Tournament play from grade 1 through grade 9: bidding systems, partnership communication under incomplete information, and structured post-game review."
   ]
 };
 
@@ -398,33 +384,6 @@ const ENTRIES = [
     ],
     gallery: []
   },
-  {
-    id: "ayls",
-    kind: "experience",
-    title: "Youth Service and Fundraising",
-    role: "Fundraising and Service Volunteer",
-    org: "Alliance of Youth Leaders in the United States",
-    date: "2023 — 2025",
-    image: "images/alyus2.jpg",
-    blurb:
-      "Ran concession stands, raised about $300 for programs serving children with disabilities, packed donated books, and prepared meals with Feed My Starving Children.",
-    tags: ["Fundraising", "Service"],
-    links: [],
-    overview: [
-      "I volunteered with the Alliance of Youth Leaders in the United States, running concession stands and packing donated books."
-    ],
-    details: [
-      {
-        heading: "What I did",
-        points: [
-          "Operated concession stands at community parks and personally raised approximately $300 for programs serving children with disabilities.",
-          "Packed donated books for communities in Africa and prepared meal packages through Feed My Starving Children."
-        ]
-      }
-    ],
-    gallery: []
-  },
-
   /* ------------------------------ PROJECTS ------------------------------ */
   {
     id: "ekdrone",
