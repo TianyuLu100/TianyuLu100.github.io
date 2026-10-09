@@ -189,7 +189,7 @@ const ENTRIES = [
     role: "Research Assistant",
     org: "UNT Autonomous-Driving Perception Project",
     date: "Aug. 2025 — Present",
-    image: "images/autodrive6camera.png",
+    image: "images/gitbev.png",
     blurb:
       "Extends GiT, a generalist vision model, with task-conditioned dual-expert routing across detection, segmentation, captioning, and grounding. Studies when tasks should share representations versus separate pathways, including KoLeo-based feature separation, routing visualizations, and ablations.",
     tags: [
@@ -390,23 +390,90 @@ const ENTRIES = [
     kind: "project",
     title: "EkDrone Racing UAV",
     role: "Hardware and Flight Lead",
-    org: "EkDrone Racing UAV Project",
-    date: "Grades 11–12",
+    org: "EkDrone Racing UAV Project · TAMS / UNT",
+    date: "2025–2026",
     image: "images/racingdrone2.png",
     blurb:
-      "Hardware and Flight Lead on a team pursuing the world drone speed record—integration, tuning, and maiden flight—with outreach to students and local communities.",
-    tags: ["UAV", "Flight tuning", "3D printing", "Fluid dynamics"],
+      "Four-person team engineering a micro-class racing quad to challenge the Guinness World Records for battery-powered RC quadcopter speed—targeting on the order of 400 km/h (250 mph)—with wing-informed structure, propeller aerodynamics, and a compact FPV avionics stack.",
+    tags: [
+      "FPV",
+      "Aerodynamics",
+      "CAD",
+      "Propeller design",
+      "Flight testing"
+    ],
     links: [],
     overview: [
-      "Our team is dedicated to pushing the limits of aerial technology. Our primary goal is to break the world record for drone speed, setting a new benchmark for performance and engineering innovation. Along the way, we aim to share what we learn. In the future, we plan to educate and inspire the next generation of creators, bringing drone knowledge to local communities, students, and anyone passionate about flight."
+      "Our team is dedicated to pushing the limits of aerial technology. Our primary goal is to break the world record for drone speed in the quadcopter form factor, setting a new benchmark for performance and engineering innovation. Along the way, we aim to share what we learn. In the future, we plan to educate and inspire the next generation of creators, bringing drone knowledge to local communities, students, and anyone passionate about flight.",
+      "We combine aerospace structure and airfoil work, computer-engineering hardware integration, and flight-control software. The near-term focus is the Guinness categories for fastest speed by a battery-powered RC quadcopter and fastest speed by an RC micro drone (quadcopter), with outreach tied to the UNT and TAMS communities.",
+      "Project roadmap: procure the full bill of materials by early November 2025, fly a functional prototype by early December 2025 (electronics suite plus first-pass aerodynamic body), then iterate toward a record attempt by March 2026, with at most about one month of schedule margin."
     ],
     details: [
       {
-        heading: "Hardware and flight",
+        heading: "Aerodynamics and structure",
         points: [
-          "Built the racing drone with three teammates. I took the lead on integrating hardware, checking that components were compatible, and tuning the receiver and remote-control parameters.",
-          "Adjusted the power-to-weight balance and flight parameters for high-speed flying, using racing-drone materials and 3D-printed parts informed by a fluid-dynamics simulation.",
-          "Wrote and ran a pre-flight risk checklist, managed flight operations, and conducted the maiden flight after the team had verified the system."
+          "Prioritize stability at extreme speed—earlier record attempts in our research failed when the frame could not stay controllable, so the four-rotor support structure is being shaped like a lifting surface rather than a bare cross arm.",
+          "Airfoil and planform studies draw on NACA and Eppler families (for example NACA 633018 and FX 63-137) with CFD and hand sketches that explore blended bodies, fin placement, and boundary-layer management on the nose and fuselage.",
+          "Wind-tunnel nose comparisons at roughly 39 mph and 72 °F showed a long elliptical nose produced the lowest measured drag (~4.15 g) among parabolic, ogive, conical, and blunt-cylinder options—guiding the forward fuselage CAD.",
+          "Manufacturing targets include faster builds (on the order of a few days for printed propellers and main body), carbon-fiber fits where stiffness matters, and optional riblet or surface-roughness treatments on micro-propellers after published thrust-stand studies."
+        ]
+      },
+      {
+        heading: "Propulsion, avionics, and packaging",
+        points: [
+          "Control link: RadioMaster TX16S (EdgeTX) transmitter with an ExpressLRS receiver on the airframe; flight stack centers on a combined flight-controller and ESC board sized for high-RPM micro motors.",
+          "Power train: 6S 650 mAh high-discharge LiPo (XT30), Flash Hobby Arthur 1408 2800 KV class motors, low-ESR bulk capacitors, and 18 AWG / 26 AWG harnessing following FPV wiring practice.",
+          "Video and telemetry: micro FPV camera, 5.8 GHz VTX (Rush Tank Solo class), RHCP antenna, and goggles for chase viewing; GPS module reserved for future positioning experiments.",
+          "Pack electronics to minimize frontal area when viewed from ahead while keeping cable runs short—length is traded against drag and center-of-mass placement in the CAD body."
+        ]
+      },
+      {
+        heading: "Propeller modeling and test plan",
+        points: [
+          "Propeller thrust uses static and dynamic models (including the empirical dynamic-thrust formulation from electricrcaircraftguy.com) to bracket RPM, pitch, and forward speed before bench tests.",
+          "Open research questions on our sensitivity list: push–pull motor installation drag (on the order of 0.3 N per motor), fin drag and directional stability, whole-airframe drag buildup, and propeller design sweeps (axial bend, sweep, blade count, and angle of attack at target speed).",
+          "Literature on 3D-printed micro-propeller roughness suggests measurable thrust gain and power reduction at matched Reynolds number—another knob in the design space alongside conventional pitch and diameter trades.",
+          "Future flight-software scripts include auto-hover and straight-line assist modes to make high-speed trim and range testing repeatable once the prototype is airborne."
+        ]
+      },
+      {
+        heading: "Hardware, flight operations, and outreach",
+        points: [
+          "Built the racing drone with three teammates. I lead hardware integration, component compatibility checks, and receiver and transmitter tuning.",
+          "Balance power-to-weight and flight gains for high-speed flight using racing-grade materials and 3D-printed parts informed by fluid-dynamics simulation and the structural CAD.",
+          "Author and run a pre-flight risk checklist, manage flight operations, and conduct maiden-flight milestones after the team verifies the system.",
+          "Longer-term outreach includes STEM partnerships (for example AIAA volunteer channels), low-cost educational airplane kits for schools, and documenting the build for sponsors and campus collaborators."
+        ]
+      }
+    ],
+    figuresHeading: "Design studies and validation",
+    figures: [
+      {
+        src: "images/ekdrone/doc-2-image4.jpg",
+        wide: true,
+        alt: "Notebook sketches of drone airframes, wings, and boundary-layer notes",
+        caption:
+          "Early notebook concepts: blended lifting bodies, multi-rotor layouts, and boundary-layer notes on the nose and fuselage.",
+        text: [
+          "Sketches explore wing-shaped rotor supports and “advanced” versus pictorial layouts before the team locked manufacturing-friendly geometry in CAD."
+        ]
+      },
+      {
+        src: "images/ekdrone/doc-4-image1.png",
+        alt: "Table of nose-shape wind-tunnel drag measurements at about 39 mph",
+        caption:
+          "Nose-shape drag comparison at ~39 mph and 72 °F; long elliptical profile measured the lowest drag in the sweep.",
+        text: [
+          "The table motivated a sharper but still elliptical forward section instead of a blunt cylinder, which measured roughly twice the drag of the best shape in the same tunnel run."
+        ]
+      },
+      {
+        src: "images/ekdrone/doc-1-image2.png",
+        alt: "Dynamic thrust equation for propellers relating RPM, diameter, pitch, and forward airspeed",
+        caption:
+          "Dynamic thrust model used to bracket propeller RPM, diameter, and pitch before bench and thrust-stand experiments.",
+        text: [
+          "We use the expanded and simplified forms to sanity-check motor and prop choices against target airspeed, then refine with measured thrust-stand data on printed props."
         ]
       }
     ],
