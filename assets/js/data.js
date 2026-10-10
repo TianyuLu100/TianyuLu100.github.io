@@ -405,8 +405,7 @@ const ENTRIES = [
     links: [],
     overview: [
       "Our team is dedicated to pushing the limits of aerial technology. Our primary goal is to break the world record for drone speed in the quadcopter form factor, setting a new benchmark for performance and engineering innovation. Along the way, we aim to share what we learn. In the future, we plan to educate and inspire the next generation of creators, bringing drone knowledge to local communities, students, and anyone passionate about flight.",
-      "We combine aerospace structure and airfoil work, computer-engineering hardware integration, and flight-control software. The near-term focus is the Guinness categories for fastest speed by a battery-powered RC quadcopter and fastest speed by an RC micro drone (quadcopter), with outreach tied to the UNT and TAMS communities.",
-      "Project roadmap: procure the full bill of materials by early November 2025, fly a functional prototype by early December 2025 (electronics suite plus first-pass aerodynamic body), then iterate toward a record attempt by March 2026, with at most about one month of schedule margin."
+      "We combine aerospace structure and airfoil work, computer-engineering hardware integration, and flight-control software. The near-term focus is the Guinness categories for fastest speed by a battery-powered RC quadcopter and fastest speed by an RC micro drone (quadcopter), with outreach tied to the UNT and TAMS communities."
     ],
     details: [
       {
