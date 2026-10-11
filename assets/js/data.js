@@ -75,7 +75,6 @@ const ENTRIES = [
     title: "UAV-Assisted UGV Task Dispatching",
     role: "Student Researcher",
     org: "University of North Texas, Prof. Qing Yang's Lab",
-    date: "Aug. 2025 — Present",
     image: "images/yang-lab-results.svg",
     imageFit: "contain",
     blurb:
@@ -188,7 +187,6 @@ const ENTRIES = [
     title: "Dynamic Expert Routing for Multi-Task Vision (GiT)",
     role: "Research Assistant",
     org: "UNT Autonomous-Driving Perception Project",
-    date: "Aug. 2025 — Present",
     image: "images/gitbev.png",
     blurb:
       "Extends GiT, a generalist vision model, with task-conditioned dual-expert routing across detection, segmentation, captioning, and grounding. Studies when tasks should share representations versus separate pathways, including KoLeo-based feature separation, routing visualizations, and ablations.",
@@ -248,7 +246,6 @@ const ENTRIES = [
     title: "Wind-Turbine Condition Monitoring",
     role: "Team Researcher",
     org: "UT Dallas STEM Bridge, advised by Dr. Jie Zhang",
-    date: "Summer 2025",
     image: "images/utdwind.png",
     imageFit: "contain",
     blurb:
@@ -391,7 +388,6 @@ const ENTRIES = [
     title: "EkDrone Racing UAV",
     role: "Hardware and Flight Lead",
     org: "EkDrone Racing UAV Project · TAMS / UNT",
-    date: "2025–2026",
     image: "images/racingdrone2.png",
     blurb:
       "Four-person team engineering a micro-class racing quad to challenge the Guinness World Records for battery-powered RC quadcopter speed—targeting on the order of 400 km/h (250 mph)—with wing-informed structure, propeller aerodynamics, and a compact FPV avionics stack.",
@@ -484,7 +480,6 @@ const ENTRIES = [
     title: "Autonomous Quadrotor UAV",
     role: "Hardware and Autonomy Integration",
     org: "Research UAV platform",
-    date: "2025",
     image: "images/drone1.jpg",
     blurb:
       "Quadrotor built for onboard planning and flight: Jetson companion computer, depth camera, and an NxIPX4v2 stack with GPS and IMU, running PX4, ROS 2, and EGO-Planner.",
@@ -570,7 +565,6 @@ const ENTRIES = [
     title: "Wing Washout Aerodynamics Study",
     role: "Organizer",
     org: "School science project",
-    date: "2024 — 2025",
     image: "images/wash.jpg",
     blurb:
       "ANSYS Fluent sweeps of a simplified 737 wing. With no washout the tip is stalled by 12° angle of attack; with 5° of washout the same tip section is still attached at 12° and at 18°.",
