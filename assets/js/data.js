@@ -148,7 +148,7 @@ const ENTRIES = [
           "Attention-Enhanced PPO for UGV Task Dispatching in UAV-Assisted Open-RMF Logistics",
         authors: "Tianyu Lu (first author)",
         venue:
-          "Submitted August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things. Under review.",
+          "Accepted at the IEEE Annual Congress on Artificial Intelligence of Things 2026 (IEEE AIoT 2026).",
         summary:
           "Presents the complete ROS 2/Open-RMF pipeline, 63-dimensional dispatching MDP, masked 12-token attention encoder, and a shared-pipeline comparison with PPO, A2C, DQN, greedy, and round-robin scheduling.",
         href: "docs/Attn_PPO_Paper_Draft (1).pdf"
