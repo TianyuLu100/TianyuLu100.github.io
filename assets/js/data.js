@@ -136,7 +136,7 @@ const ENTRIES = [
         heading: "Research communication",
         points: [
           "Prepared the project as a first-author manuscript covering the ROS 2/RMF architecture, MDP, attention encoder, controlled baselines, ablations, experimental trade-offs, and limitations.",
-          "Submitted the manuscript on August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things; it is accepted at IEEE AIoT 2026.",
+          "Submitted the manuscript on August 1, 2026 to the IEEE Annual Congress on Artificial Intelligence of Things; it was accepted at IEEE AIoT 2026 on October 16, 2026.",
           "Extended the original logistics formulation toward search-and-rescue scenarios, where aerial sensing supplies target locations and ground robots perform the response."
         ]
       }
