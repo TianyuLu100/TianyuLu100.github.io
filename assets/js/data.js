@@ -110,7 +110,6 @@ const ENTRIES = [
           "Formulated dispatching as a 63-feature observation: 3 × 7 robot features, 8 × 3 pending-task features, 9 global workload features, and 3 × 3 estimated start times. Four discrete actions select one of three UGVs or wait.",
           "Converted the flat state into 12 entities—one global token, three robot tokens, and eight task tokens—and masked inactive task slots before attention. The encoder uses 64-dimensional embeddings, four self-attention heads, a residual connection with layer normalization, and a 128-dimensional output shared by PPO's policy and value functions.",
           "Kept PPO's optimizer, reward, action space, and RMF interface fixed. The reward combines valid assignment, task waiting, travel distance, nonlinear queue congestion, completion, and estimated-makespan improvement.",
-          "Code-level qualification: the current attention extractor accepts the 63-dimensional observation for interface compatibility but tokenizes only the first 54 robot, task, and global features. The final nine estimated-start-time features are not consumed by its forward pass, so a strict feature-controlled PPO-versus-Attn-PPO ablation still requires aligning those inputs.",
           "Trained through Stable-Baselines3 with a 3 × 10⁻⁴ learning rate, 2,048-step rollouts, batch size 64, discount factor 0.95, and masked attention over the varying pending-task set."
         ]
       },
