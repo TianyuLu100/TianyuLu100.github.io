@@ -91,7 +91,7 @@ const ENTRIES = [
     links: [],
     overview: [
       "I work in Prof. Qing Yang's lab at the University of North Texas. My research asks how a fleet should assign newly discovered tasks when every choice changes future robot queues, travel distance, and mission completion time.",
-      "I built the end-to-end experimental stack in ROS 2, Gazebo, and Open-RMF: a simulated UAV discovers red-cube targets, a learned policy assigns each task to one of three delivery robots, RMF executes the navigation request, and completion-monitoring and recorder nodes close the loop. The same interfaces let me compare learned policies with deterministic baselines without changing the robot-execution layer.",
+      "I used the end-to-end experimental stack in ROS 2, Gazebo, and Open-RMF: a simulated UAV discovers red-cube targets, a learned policy assigns each task to one of three delivery robots, RMF executes the navigation request, and completion-monitoring and recorder nodes close the loop. The same interfaces let me compare learned policies with deterministic baselines without changing the robot-execution layer.",
       "The current aggregated evaluation batch shows a meaningful trade-off. Attn-PPO reached the shortest mean mission time and lowest queue-count variance, while greedy scheduling retained lower local waiting time and movement distance. I therefore treat attention as a fleet-level scheduling improvement in this configuration, not as a universal winner on every objective."
     ],
     details: [
