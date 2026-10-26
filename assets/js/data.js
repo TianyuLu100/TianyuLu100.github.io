@@ -417,7 +417,7 @@ const ENTRIES = [
         points: [
           "Control link: RadioMaster TX16S (EdgeTX) transmitter with an ExpressLRS receiver on the airframe; flight stack centers on a combined flight-controller and ESC board sized for high-RPM micro motors.",
           "Power train: 6S 650 mAh high-discharge LiPo (XT30), Flash Hobby Arthur 1408 2800 KV class motors, low-ESR bulk capacitors, and 18 AWG / 26 AWG harnessing following FPV wiring practice.",
-          "Video and telemetry: micro FPV camera, 5.8 GHz VTX (Rush Tank Solo class), RHCP antenna, and goggles for chase viewing; GPS module reserved for future positioning experiments.",
+          "Video and telemetry: micro FPV camera, 5.8 GHz VTX (Rush Tank Solo class), RHCP antenna, and goggles for chase viewing.",
           "Pack electronics to minimize frontal area when viewed from ahead while keeping cable runs short—length is traded against drag and center-of-mass placement in the CAD body."
         ]
       },
