@@ -153,6 +153,20 @@ const ENTRIES = [
         href: "docs/Attn_PPO_Paper_Draft (1).pdf"
       }
     ],
+    figuresHeading: "System and evidence",
+    figures: [
+      {
+        src: "images/yang-lab-results.svg",
+        wide: true,
+        alt: "Comparison of mean mission completion time for Attn-PPO, PPO, A2C, greedy, round-robin, and DQN, with a summary of waiting time, movement distance, and queue variance.",
+        caption:
+          "Current aggregated RMF evaluation batch. Lower is better for every metric; error bars show standard deviation where reported.",
+        text: [
+          "Attn-PPO is strongest on the two fleet-level objectives emphasized in this study: total completion time and workload balance. Its mean completion time is 16.0% below PPO's, and its queue-count variance is 65.8% lower.",
+          "Greedy remains an important baseline: it minimizes immediate waiting and travel in this map, but its mean mission completion time is longer. The comparison is evidence of an objective trade-off, not a claim that one policy dominates every metric."
+        ]
+      }
+    ],     
     gallery: []
   },
   {
