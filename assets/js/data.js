@@ -464,26 +464,32 @@ const ENTRIES = [
   {
     id: "UAV",
     kind: "project",
-    title: "Autonomous Quadrotor UAV",
-    role: "Hardware and Autonomy Integration",
+    title: "Quadrotor Platform for Autonomous Navigation",
+    role: "Hardware Integration and Autonomy Architecture",
     org: "Research UAV platform",
     image: "images/drone1.jpg",
     blurb:
-      "Quadrotor built for onboard planning and flight: Jetson companion computer, depth camera, and an NxIPX4v2 stack with IMU, running PX4, ROS 2, and EGO-Planner.",
-    tags: ["PX4", "ROS 2", "EGO-Planner", "Jetson", "UAV"],
+      "Built a hardware-integrated quadrotor with a Jetson companion computer, depth camera, and PX4-capable flight stack. ROS 2/EGO-Planner integration and closed-loop autonomy remain in development.",
+    tags: [
+      "PX4",
+      "Jetson",
+      "Depth Camera",
+      "Planned ROS 2",
+      "Planned EGO-Planner"
+    ],
     links: [],
     overview: [
-      "This project is a research quadrotor aimed at autonomous navigation in cluttered space. The airframe carries a depth camera and an edge computer for perception and planning, while a dedicated flight controller closes the loop on attitude, position, and motor outputs.",
-      "We designed the platform in two layers: a power and avionics architecture (main bus, DC–DC conversion, short-circuit protection, RC link, and companion computer) and a PX4 wiring stack on a 2–4S power distribution board with four ESC outputs, and an IMU on the NxIPX4v2 flight controller.",
-      "On software, PX4 runs on the flight controller for stabilization and low-level control; ROS 2 on the companion computer handles sensors, state estimation, and offboard commands; EGO-Planner generates local, obstacle-aware trajectories that feed the autonomy pipeline."
+      "This project is a hardware-integrated quadrotor platform for future autonomous-navigation experiments. The airframe carries a depth camera and a Jetson companion computer; an NxIPX4v2 flight controller is intended to provide low-level stabilization and motor control.",
+      "We designed the platform in two layers: a power and avionics architecture (main bus, DC–DC conversion, short-circuit protection, RC link, and companion computer) and a PX4 wiring stack on a 2–6S power distribution board with four ESC outputs, an M1430 GPS module, and an IMU on the NxIPX4v2 flight controller.",
+      "The planned software architecture keeps low-level stabilization and motor control on PX4, while ROS 2 on the Jetson would handle sensor processing, state estimation, and offboard commands. EGO-Planner is intended to generate obstacle-aware trajectories after integration."
     ],
     details: [
       {
         heading: "System architecture",
         points: [
           "Main battery power passes through DC–DC regulation and short-circuit detection before it reaches the Jetson companion computer, the camera, and the RC receiver, so bench and field tests stay within a defined safe envelope.",
-          "The flight stack sits on an NxIPX4v2 controller wired to a 2–4S distribution board with 33 A ESC outputs to four corner motors, and an inertial measurement unit for outdoor position and attitude.",
-          "RC remains in the loop for manual override and calibration, while the companion computer exchanges setpoints and telemetry with PX4 over the serial/USB link defined in the bring-up diagram."
+          "The flight stack sits on an NxIPX4v2 controller wired to a 2–6S distribution board with 32 A ESC outputs to four corner motors, plus GPS (M1430) and an inertial measurement unit for outdoor position and attitude.",
+          "RC remains available for manual control and calibration; after software bring-up, the planned companion-computer link would exchange setpoints and telemetry with PX4 over serial or USB."
         ]
       },
       {
@@ -495,19 +501,19 @@ const ENTRIES = [
         ]
       },
       {
-        heading: "Software stack",
+        heading: "Planned autonomy architecture",
         points: [
-          "PX4 provides the real-time autopilot: sensor drivers, state estimation, and motor mixing on the flight controller, with offboard mode for trajectory tracking from the companion computer.",
-          "ROS 2 nodes publish camera and IMU data, and bridge MAVLink topics to PX4 for armed flight and mode switching.",
-          "EGO-Planner (gradient-based local planning) builds a occupancy representation from depth, replans in milliseconds, and outputs smooth position commands for agile flight around obstacles."
+          "PX4 is intended to provide the real-time autopilot: sensor drivers, state estimation, and motor mixing on the flight controller, with offboard mode for trajectory tracking from the companion computer.",
+          "Planned ROS 2 nodes would publish camera and IMU data, fuse odometry with GPS when available, and bridge MAVLink topics to PX4 for armed flight and mode switching.",
+          "After integration, EGO-Planner would build an occupancy representation from depth data, replan local trajectories, and output smooth position commands for obstacle-aware flight."
         ]
       },
       {
         heading: "Summary and outlook",
         points: [
-          "The hardware design ties protected power, PX4-grade flight electronics, and Jetson-class compute into one platform that can run the full sense–plan–act loop.",
-          "Bringing EGO-Planner up on ROS 2 with PX4 offboard control validates the architecture: perception and planning stay on the companion computer; safety-critical control stays on the flight controller.",
-          "Next steps are tighter calibration of the depth–body transform, and closed-loop flights that log planner latency, tracking error, and power draw end to end."
+          "The hardware platform combines protected power, PX4-capable flight electronics, Jetson compute, and a depth camera as the basis for future sense–plan–act experiments.",
+          "The planned architecture separates perception and planning on the companion computer from low-level control on the flight controller; ROS 2/EGO-Planner integration and closed-loop validation remain future work.",
+          "Next steps are ROS 2/PX4 bring-up, depth-camera calibration, GPS-inertial fusion testing, and closed-loop flights that measure planner latency, tracking error, and power draw."
         ]
       }
     ],
@@ -516,11 +522,11 @@ const ENTRIES = [
       {
         src: "images/uav-architecture.png",
         wide: true,
-        alt: "UAV power and avionics block diagram alongside NxIPX4v2 wiring to ESCs, and IMU",
+        alt: "UAV power and avionics block diagram alongside NxIPX4v2 wiring to ESCs, GPS, and IMU",
         caption:
           "Power path (DC–DC, short-circuit detection, Jetson, camera, RC) and PX4 flight-controller wiring on the 2–6S distribution board.",
         text: [
-          "The left block diagram is the logical power and compute stack; the right panel is the physical hookup for motors, and the inertial unit on the NxIPX4v2."
+          "The left block diagram is the logical power and compute stack; the right panel is the physical hookup for motors, GPS, and the inertial unit on the NxIPX4v2."
         ]
       },
       {
@@ -530,7 +536,7 @@ const ENTRIES = [
         caption:
           "Exploded mechanical layout: depth camera, companion computer, flight controller, frame, four motors, and center battery pack.",
         text: [
-          "This layout guided cable routing and center-of-mass placement so the depth camera frame aligns with the planner’s occupancy grid."
+          "This layout guided cable routing and center-of-mass placement while reserving the forward camera placement for future calibration and depth-based planning."
         ]
       },
       {
