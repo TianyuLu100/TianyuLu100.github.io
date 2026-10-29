@@ -397,7 +397,6 @@ const ENTRIES = [
         points: [
           "Prioritize stability at extreme speed—earlier record attempts in our research failed when the frame could not stay controllable, so the four-rotor support structure is being shaped like a lifting surface rather than a bare cross arm.",
           "Airfoil and planform studies draw on NACA and Eppler families (for example NACA 633018 and FX 63-137) with CFD and hand sketches that explore blended bodies, fin placement, and boundary-layer management on the nose and fuselage.",
-          "Wind-tunnel nose comparisons at roughly 39 mph and 72 °F showed a long elliptical nose produced the lowest measured drag (~4.15 g) among parabolic, ogive, conical, and blunt-cylinder options—guiding the forward fuselage CAD.",
           "Manufacturing targets include faster builds (on the order of a few days for printed propellers and main body), carbon-fiber fits where stiffness matters, and optional riblet or surface-roughness treatments on micro-propellers after published thrust-stand studies."
         ]
       },
