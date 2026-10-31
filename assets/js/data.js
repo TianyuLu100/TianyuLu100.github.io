@@ -562,12 +562,6 @@ const ENTRIES = [
     blurb:
       "ANSYS Fluent on a simplified Boeing 737 wing with spanwise airfoil change and tip twist (0°, 3°, or 5°). With 0° tip twist the 10 m station stalls by 12° angle of attack; with 5° tip twist the same cut stays attached at 12° and at 18°.",
     tags: ["ANSYS Fluent", "SST k-omega", "CFD", "Aerodynamics"],
-    links: [
-      {
-        label: "Fluent contour workbook (PDF)",
-        href: "docs/wing-washout-fluent-results.pdf"
-      }
-    ],
     overview: [
       "I presented this work at the Jasper High School science fair. The real 737 uses aerodynamic twist along the span; this model adds parametric geometric twist at the tip to see how much extra margin that buys before tip stall.",
       "Geometry follows a simplified half-wing: root chord 4.9 m, tip chord 1.25 m, semi-span 10.44 m, and quarter-chord sweep 25°. Type 1 sections match the root airfoil (cuts at 3 m); Type 2 sections at 7 m and 10 m use a different-camber airfoil, which acts like built-in aerodynamic twist. On top of that, only the tip is twisted: tip outboard angles of 0°, 3°, or 5° while the root is not milled.",
