@@ -556,34 +556,46 @@ const ENTRIES = [
     id: "wing-washout",
     kind: "project",
     title: "Wing Washout Aerodynamics Study",
-    role: "Organizer",
-    org: "School science project",
+    role: "Student Researcher",
+    org: "Jasper High School · school science fair",
     image: "images/wash.jpg",
     blurb:
-      "ANSYS Fluent sweeps of a simplified 737 wing. With no washout the tip is stalled by 12° angle of attack; with 5° of washout the same tip section is still attached at 12° and at 18°.",
-    tags: ["ANSYS Fluent", "SST k-omega", "Aerodynamics"],
-    links: [],
+      "ANSYS Fluent on a simplified Boeing 737 wing with spanwise airfoil change and tip twist (0°, 3°, or 5°). With 0° tip twist the 10 m station stalls by 12° angle of attack; with 5° tip twist the same cut stays attached at 12° and at 18°.",
+    tags: ["ANSYS Fluent", "SST k-omega", "CFD", "Aerodynamics"],
+    links: [
+      {
+        label: "Fluent contour workbook (PDF)",
+        href: "docs/wing-washout-fluent-results.pdf"
+      }
+    ],
     overview: [
-      "I presented the project at the school science fair.",
-      "The Fluent workbook is a plot book, not a written report. Each case is named 737-washout-angle: washout of 0°, 3°, or 5°, and angle of attack from 0° to 18° in steps of 3°. For every case I saved static pressure, velocity, and velocity vectors on the symmetry plane, on a cut 3 m from the root (root airfoil), on a cut 7 m from the root (tip airfoil), and on a cut 10 m from the root (the tip)."
+      "I presented this work at the Jasper High School science fair. The real 737 uses aerodynamic twist along the span; this model adds parametric geometric twist at the tip to see how much extra margin that buys before tip stall.",
+      "Geometry follows a simplified half-wing: root chord 4.9 m, tip chord 1.25 m, semi-span 10.44 m, and quarter-chord sweep 25°. Type 1 sections match the root airfoil (cuts at 3 m); Type 2 sections at 7 m and 10 m use a different-camber airfoil, which acts like built-in aerodynamic twist. On top of that, only the tip is twisted: tip outboard angles of 0°, 3°, or 5° while the root is not milled.",
+      "Cases are named 737-rootTip-angleOfAttack, e.g. 737-0-12 is 0° tip twist at 12° angle of attack and 737-5-18 is 5° tip twist at 18°. Angle of attack runs 0°–18° in 3° steps. Each case saves static pressure, velocity, and velocity vectors on the symmetry plane and on cuts 3 m, 7 m, and 10 m from the root."
     ],
     details: [
       {
-        heading: "The study",
+        heading: "Why tip twist matters",
         points: [
-          "The question was whether washout can delay tip stall on a simplified commercial-aircraft wing, and what efficiency that twist costs.",
-          "I built and meshed the model in ANSYS Fluent, cleared negative-volume cells with local refinement and boundary-layer settings, and used the SST k-omega model for the vortical flow.",
-          "The saved contours cover the full 0° washout sweep and the 5° washout sweep except 15°. The 3° washout cases, and 5° washout at 15°, are titled in the workbook but have no contour images.",
-          "These runs mark a design range. They still need to be checked against reference or experimental data."
+          "Sweepback makes the tip see a higher effective angle of attack, so the tip can stall before the root—a loss of roll control. Geometric twist (washout) and aerodynamic twist both shift lift toward the root; I wanted to see that stall sequence in contour form on a 737-like wing.",
+          "The baseline wing already mixes aerodynamic twist (two airfoil families) with optional tip geometric twist. The sweep compares 0°, 3°, and 5° tip twist at the same angles of attack."
+        ]
+      },
+      {
+        heading: "CFD setup",
+        points: [
+          "I built and meshed the wing in ANSYS Fluent, trimmed negative-volume cells with local refinement, and kept the mesh near 950k nodes to stay under the student license cap (~1.04M).",
+          "Solver: density-based, ideal gas with Sutherland viscosity, operating pressure 79439 Pa, SST k-omega turbulence. Inlet: pressure-far-field at Mach 0.6 and 280 K; outlet: pressure-outlet; wing root: symmetry plane.",
+          "These runs explore a design range. They still need validation against wind-tunnel or published 737 data."
         ]
       },
       {
         heading: "What the contours show",
         points: [
-          "At 0° washout and 0° angle of attack, the symmetry-plane pressure has a stagnation point on the nose and suction over the upper surface. The wake behind the trailing edge is thin.",
-          "With no washout, the tip section at 10 m is already stalled at 12°. Velocity vectors reverse over the aft upper surface, and the same separated wake is still there at 15° and 18°.",
-          "On that untwisted wing the root does not stall with the tip. At 15° the section 3 m from the root still has a fast suction peak, and the vectors follow the airfoil.",
-          "With 5° of washout, the tip section at the same 12° stays attached: the vectors follow the upper surface, with only a thin slow layer near the wall. At 18° the tip flow still leaves near the trailing edge instead of opening into that reversed wake."
+          "737-0-0 on the symmetry plane: stagnation at the nose, suction on the upper surface, and a thin wake— the attached baseline.",
+          "On 737-0-0, separation begins on the aft upper surface as angle of attack increases. By 9° at 7 m from the root, part of the aft flow is already separated while the 10 m tip still shows only local slow regions—not yet the full reversed wake seen later.",
+          "With 0° tip twist, the 10 m station is fully stalled at 12°: vectors reverse over the aft upper surface, and that separated wake persists at 15° and 18°. At the same 15° angle of attack, the 3 m root section stays attached with a sharp suction peak.",
+          "With 5° tip twist (737-5-12 at 10 m), the tip stays attached at 12°: vectors follow the upper surface with only a thin slow layer near the wall. At 737-5-18 the tip flow still exits near the trailing edge instead of opening into the thick reversed wake seen without tip twist at 12°."
         ]
       }
     ],
@@ -592,51 +604,51 @@ const ENTRIES = [
       {
         src: "images/washout-0deg-0aoa-pressure.png",
         wide: true,
-        alt: "Static-pressure contours on the symmetry plane of the wing at 0 degrees washout and 0 degrees angle of attack",
+        alt: "Static-pressure contours on the symmetry plane of the wing at 0 degrees tip twist and 0 degrees angle of attack",
         caption:
-          "737-0-0, symmetry plane. Static pressure at 0° washout and 0° angle of attack.",
+          "737-0-0, symmetry plane. Static pressure at 0° tip twist and 0° angle of attack.",
         text: [
-          "Stagnation sits on the nose, suction sits over the upper surface, and the wake is thin. This is the attached baseline the later angles are compared with."
+          "Stagnation at the nose, suction on the upper surface, and a thin wake—the attached baseline for the 0° tip-twist sweep."
         ]
       },
       {
         src: "images/washout-0deg-12aoa-tip-vectors.png",
         wide: true,
-        alt: "Velocity vectors at the wing tip with 0 degrees washout and 12 degrees angle of attack, showing a reversed wake",
+        alt: "Velocity vectors at the wing tip with 0 degrees tip twist and 12 degrees angle of attack, showing a reversed wake",
         caption:
-          "737-0-12, 10 m from the root. Velocity vectors at 0° washout and 12° angle of attack.",
+          "737-0-12, 10 m from the root (Type 2 tip section). Velocity vectors at 0° tip twist and 12° angle of attack.",
         text: [
-          "The tip is stalled. Vectors over the aft upper surface turn back upstream, and a slow wake sits off the surface."
+          "The tip is stalled. Vectors over the aft upper surface turn back upstream, with a slow wake off the surface."
         ]
       },
       {
         src: "images/washout-0deg-15aoa-root-vectors.png",
         wide: true,
-        alt: "Velocity vectors 3 meters from the wing root at 0 degrees washout and 15 degrees angle of attack, still following the airfoil",
+        alt: "Velocity vectors 3 meters from the wing root at 0 degrees tip twist and 15 degrees angle of attack, still following the airfoil",
         caption:
-          "737-0-15, 3 m from the root. Velocity vectors at 0° washout and 15° angle of attack.",
+          "737-0-15, 3 m from the root (Type 1 root section). Velocity vectors at 0° tip twist and 15° angle of attack.",
         text: [
-          "Three degrees higher than the stalled tip, the root section is still attached. A fast suction peak runs over the upper surface and the vectors follow the airfoil. On the untwisted wing, the tip loses attachment first."
+          "Three degrees higher than the stalled tip, the root section is still attached: a sharp suction peak and vectors that follow the airfoil. On the 0° tip-twist wing, the tip loses attachment first."
         ]
       },
       {
         src: "images/washout-5deg-12aoa-tip-vectors.png",
         wide: true,
-        alt: "Velocity vectors at the wing tip with 5 degrees of washout and 12 degrees angle of attack, still attached",
+        alt: "Velocity vectors at the wing tip with 5 degrees of tip twist and 12 degrees angle of attack, still attached",
         caption:
-          "737-5-12, 10 m from the root. Velocity vectors at 5° washout and 12° angle of attack.",
+          "737-5-12, 10 m from the root. Velocity vectors at 5° tip twist and 12° angle of attack.",
         text: [
-          "Same station and same angle as the stalled untwisted tip. With 5° of washout the vectors stay on the upper surface."
+          "Same station and angle as the stalled 737-0-12 tip. With 5° tip twist the vectors stay on the upper surface."
         ]
       },
       {
         src: "images/washout-5deg-18aoa-tip-vectors.png",
         wide: true,
-        alt: "Velocity vectors at the wing tip with 5 degrees of washout and 18 degrees angle of attack",
+        alt: "Velocity vectors at the wing tip with 5 degrees of tip twist and 18 degrees angle of attack",
         caption:
-          "737-5-18, 10 m from the root. Velocity vectors at 5° washout and 18° angle of attack.",
+          "737-5-18, 10 m from the root. Velocity vectors at 5° tip twist and 18° angle of attack.",
         text: [
-          "At 18° the tip flow still leaves near the trailing edge. It does not open into the thick reversed wake seen without washout at 12°."
+          "At 18° the tip flow still leaves near the trailing edge—not the thick reversed wake seen on 737-0-12."
         ]
       }
     ],
