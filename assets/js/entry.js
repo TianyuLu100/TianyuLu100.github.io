@@ -142,6 +142,62 @@
     main.appendChild(s);
   });
 
+  /* Optional evidence tables follow the explanatory sections. The first
+     column is treated as the row label; wide tables scroll inside their
+     wrapper instead of widening the page. */
+  (entry.tables || []).forEach((tableData) => {
+    const s = el("section", "entry-section entry-data-table");
+    if (tableData.heading) s.appendChild(el("h3", null, tableData.heading));
+
+    const wrap = el("div", "data-table-wrap");
+    wrap.tabIndex = 0;
+    wrap.setAttribute("role", "region");
+    wrap.setAttribute(
+      "aria-label",
+      (tableData.heading || "Data table") + "; scroll horizontally for all columns"
+    );
+    const table = el("table", "data-table");
+
+    if (tableData.caption) {
+      table.appendChild(el("caption", null, tableData.caption));
+    }
+
+    const columns = tableData.columns || [];
+    if (columns.length) {
+      const thead = el("thead");
+      const tr = el("tr");
+      columns.forEach((column) => {
+        const th = el("th", null, column);
+        th.scope = "col";
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+      table.appendChild(thead);
+    }
+
+    const rows = tableData.rows || [];
+    if (rows.length) {
+      const tbody = el("tbody");
+      rows.forEach((row) => {
+        const tr = el("tr");
+        row.forEach((value, cellIndex) => {
+          const cell = el(cellIndex === 0 ? "th" : "td", null, value);
+          if (cellIndex === 0) cell.scope = "row";
+          tr.appendChild(cell);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+    }
+
+    wrap.appendChild(table);
+    s.appendChild(wrap);
+    if (tableData.note) {
+      s.appendChild(el("p", "data-table-note", tableData.note));
+    }
+    main.appendChild(s);
+  });
+  
   /* ------------------------- papers / reports ------------------------ */
 
   function documentCard(doc) {
