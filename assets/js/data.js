@@ -560,12 +560,23 @@ const ENTRIES = [
     org: "Jasper High School · school science fair",
     image: "images/wash.jpg",
     blurb:
-      "ANSYS Fluent on a simplified Boeing 737 wing with spanwise airfoil change and tip twist (0°, 3°, or 5°). With 0° tip twist the 10 m station stalls by 12° angle of attack; with 5° tip twist the same cut stays attached at 12° and at 18°.",
+      "A 21-case ANSYS Fluent study of a simplified 737-derived half-wing: 0°, 3°, or 5° washout across seven angles of attack at Mach 0.6. More washout delayed or limited wingtip separation, while its effect on lift-to-drag ratio depended on angle of attack.",
     tags: ["ANSYS Fluent", "SST k-omega", "CFD", "Aerodynamics"],
     overview: [
-      "I presented this work at the Jasper High School science fair. The real 737 uses aerodynamic twist along the span; this model adds parametric geometric twist at the tip to see how much extra margin that buys before tip stall.",
-      "Geometry follows a simplified half-wing: root chord 4.9 m, tip chord 1.25 m, semi-span 10.44 m, and quarter-chord sweep 25°. Type 1 sections match the root airfoil (cuts at 3 m); Type 2 sections at 7 m and 10 m use a different-camber airfoil, which acts like built-in aerodynamic twist. On top of that, only the tip is twisted: tip outboard angles of 0°, 3°, or 5° while the root is not milled.",
+      "I presented this work at the Jasper High School science fair. The study asks how adding geometric washout to a simplified swept half-wing changes wingtip separation and force coefficients across the tested range.",
+      "Geometry follows a simplified half-wing: root chord 4.9 m, tip chord 1.25 m, semi-span 10.44 m, and quarter-chord sweep 25°. Type 1 sections match the root airfoil (cuts at 3 m); Type 2 sections at 7 m and 10 m use a different-camber airfoil, which acts like built-in aerodynamic twist. On top of that, the outboard section is set to 0°, 3°, or 5° geometric washout while the root reference section remains unchanged.",
       "Cases are named 737-rootTip-angleOfAttack, e.g. 737-0-12 is 0° tip twist at 12° angle of attack and 737-5-18 is 5° tip twist at 18°. Angle of attack runs 0°–18° in 3° steps. Each case saves static pressure, velocity, and velocity vectors on the symmetry plane and on cuts 3 m, 7 m, and 10 m from the root."
+    ],
+    documents: [
+      {
+        kicker: "Project report",
+        title: "Aerodynamic Properties of the Wing Washout Design",
+        authors: "Tianyu Lu and Jingrui Duan",
+        pages: 29,
+        summary:
+          "Full geometry and solver setup, force results for all 21 simulated configurations, spanwise contour analysis, discussion, and bibliography.",
+        href: "docs/WingWashoutProjectReport.pdf"
+      }
     ],
     details: [
       {
@@ -580,7 +591,21 @@ const ENTRIES = [
         points: [
           "I built and meshed the wing in ANSYS Fluent, trimmed negative-volume cells with local refinement, and kept the mesh near 950k nodes to stay under the student license cap (~1.04M).",
           "Solver: density-based, ideal gas with Sutherland viscosity, operating pressure 79439 Pa, SST k-omega turbulence. Inlet: pressure-far-field at Mach 0.6 and 280 K; outlet: pressure-outlet; wing root: symmetry plane.",
-          "These runs explore a design range. They still need validation against wind-tunnel or published 737 data."
+          "The matrix contains 21 cases: three washout settings (0°, 3°, and 5°) at seven angles of attack (0°–18° in 3° steps)."
+        ]
+      },
+      {
+        heading: "What the force data show",
+        points: [
+          "All three configurations reached their highest lift-to-drag ratio in the tested sweep at 3° angle of attack: 16.7 for 0° washout, 16.9 for 3°, and 16.7 for 5°. At 0° angle of attack, added washout reduced L/D; from 6° through 18°, the 5° case had the highest ratio of the three, but only by a modest amount.",
+          "At 12° angle of attack, changing from 0° to 5° washout changed CL from 1.13 to 1.12 and CD from 0.183 to 0.172, raising L/D from 6.20 to 6.50 in the numerical output."
+        ]
+      },
+      {
+        heading: "Limits of the result",
+        points: [
+          "This is a student CFD parameter study, not a validated aircraft model. The report does not include a mesh-independence study, comparison with wind-tunnel or published coefficient data, or a numerical uncertainty analysis.",
+          "The results support comparisons among these 21 simulations. They do not demonstrate Boeing 737 performance, a best washout angle for an aircraft, or an improvement in real-world flight safety."
         ]
       },
       {
@@ -588,9 +613,33 @@ const ENTRIES = [
         points: [
           "737-0-0 on the symmetry plane: stagnation at the nose, suction on the upper surface, and a thin wake— the attached baseline.",
           "On 737-0-0, separation begins on the aft upper surface as angle of attack increases. By 9° at 7 m from the root, part of the aft flow is already separated while the 10 m tip still shows only local slow regions—not yet the full reversed wake seen later.",
-          "With 0° tip twist, the 10 m station is fully stalled at 12°: vectors reverse over the aft upper surface, and that separated wake persists at 15° and 18°. At the same 15° angle of attack, the 3 m root section stays attached with a sharp suction peak.",
-          "With 5° tip twist (737-5-12 at 10 m), the tip stays attached at 12°: vectors follow the upper surface with only a thin slow layer near the wall. At 737-5-18 the tip flow still exits near the trailing edge instead of opening into the thick reversed wake seen without tip twist at 12°."
+          "With 0° tip twist, the 10 m station develops severe upper-surface separation above 9°. At 12°, vectors reverse over the aft upper surface, and the separated region persists at 15° and 18°. At the same 15° angle of attack, the 3 m section remains less separated than the tip.",
+          "With 5° tip twist, the report identifies local separation at the 10 m station beginning at 12°, but not the broad, complete separation shown by the 0° case. Through 18°, these contours support delayed or limited tip separation within the simulation—not a claim about full-wing stall in flight."
         ]
+      }
+    ],
+    tables: [
+      {
+        heading: "Lift-to-drag ratio across the sweep",
+        caption:
+          "Numerical ANSYS Fluent output for 21 cases at Mach 0.6. Values are reported to the precision shown in the project report.",
+        columns: [
+          "Angle of attack",
+          "0° washout",
+          "3° washout",
+          "5° washout"
+        ],
+        rows: [
+          ["0°", "6.66", "6.11", "5.14"],
+          ["3°", "16.7", "16.9", "16.7"],
+          ["6°", "15.1", "15.4", "15.6"],
+          ["9°", "10.5", "10.9", "10.9"],
+          ["12°", "6.20", "6.43", "6.50"],
+          ["15°", "4.39", "4.44", "4.48"],
+          ["18°", "3.42", "3.44", "3.47"]
+        ],
+        note:
+          "Use these values as within-model comparisons only. They have not been supported by mesh-independence testing, external validation, or uncertainty analysis."
       }
     ],
     figuresHeading: "Selected contours",
@@ -622,17 +671,17 @@ const ENTRIES = [
         caption:
           "737-0-15, 3 m from the root (Type 1 root section). Velocity vectors at 0° tip twist and 15° angle of attack.",
         text: [
-          "Three degrees higher than the stalled tip, the root section is still attached: a sharp suction peak and vectors that follow the airfoil. On the 0° tip-twist wing, the tip loses attachment first."
+          "Three degrees higher than the strongly separated 12° tip case, this inboard section remains less separated: it retains a sharp suction peak and vectors that mostly follow the airfoil. In this 0° washout model, severe separation develops earlier near the tip."
         ]
       },
       {
         src: "images/washout-5deg-12aoa-tip-vectors.png",
         wide: true,
-        alt: "Velocity vectors at the wing tip with 5 degrees of tip twist and 12 degrees angle of attack, still attached",
+        alt: "Velocity vectors at the wing tip with 5 degrees of tip twist and 12 degrees angle of attack, showing limited local separation",
         caption:
           "737-5-12, 10 m from the root. Velocity vectors at 5° tip twist and 12° angle of attack.",
         text: [
-          "Same station and angle as the stalled 737-0-12 tip. With 5° tip twist the vectors stay on the upper surface."
+          "Same station and angle as 737-0-12. The report identifies local separation here, but this cut avoids the broad reversed-flow region visible in the 0° washout case."
         ]
       },
       {
@@ -642,7 +691,7 @@ const ENTRIES = [
         caption:
           "737-5-18, 10 m from the root. Velocity vectors at 5° tip twist and 18° angle of attack.",
         text: [
-          "At 18° the tip flow still leaves near the trailing edge—not the thick reversed wake seen on 737-0-12."
+          "At 18°, the simulated tip flow remains less separated than the 0° washout comparison; it does not open into the same thick reversed-flow region shown by 737-0-12."
         ]
       }
     ],
